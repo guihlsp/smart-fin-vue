@@ -1,19 +1,36 @@
-import DashboardLayout from "@/pages/Layout/DashboardLayout.vue";
-
-import Dashboard from "@/pages/Dashboard.vue";
-import UserProfile from "@/pages/UserProfile.vue";
-import TableList from "@/pages/TableList.vue";
-import Typography from "@/pages/Typography.vue";
-import Icons from "@/pages/Icons.vue";
-import Maps from "@/pages/Maps.vue";
-import Notifications from "@/pages/Notifications.vue";
-import UpgradeToPRO from "@/pages/UpgradeToPRO.vue";
+import DashboardLayout from "@/views/Layout/DashboardLayout.vue";
+// import Site from "@/views/Site.vue"
+import Cadastro from "@/views/Cadastro.vue";
+import Login from "@/views/Login.vue";
+import Dashboard from "@/views/Dashboard.vue";
+import UserProfile from "@/views/UserProfile.vue";
+import TableList from "@/views/TableList.vue";
+import Typography from "@/views/Typography.vue";
+import Icons from "@/views/Icons.vue";
+import Maps from "@/views/Maps.vue";
+import Notifications from "@/views/Notifications.vue";
+import UpgradeToPRO from "@/views/UpgradeToPRO.vue";
 
 const routes = [
+  // {
+  //   path: '/site',
+  //   name: 'Site',
+  //   component: Site
+  // },
+  {
+    path: "/cadastro",
+    name: "Cadastro",
+    component: Cadastro,
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: Login,
+  },
   {
     path: "/",
     component: DashboardLayout,
-    redirect: "/dashboard",
+    // redirect: "/dashboard",
     children: [
       {
         path: "dashboard",
