@@ -11,33 +11,37 @@
         <md-icon>dashboard</md-icon>
         <p>Dashboard</p>
       </sidebar-link>
-      <sidebar-link to="/user">
-        <md-icon>person</md-icon>
-        <p>User Profile</p>
-      </sidebar-link>
       <sidebar-link to="/table">
-        <md-icon>content_paste</md-icon>
-        <p>Table list</p>
+        <md-icon>currency_exchange</md-icon>
+        <p>Movimentações</p>
       </sidebar-link>
       <sidebar-link to="/typography">
-        <md-icon>library_books</md-icon>
-        <p>Typography</p>
+        <md-icon>account_balance</md-icon>
+        <p>Contas bancárias</p>
       </sidebar-link>
       <sidebar-link to="/icons">
-        <md-icon>bubble_chart</md-icon>
-        <p>Icons</p>
+        <md-icon>category</md-icon>
+        <p>Categorias</p>
+      </sidebar-link>
+      <sidebar-link to="/icons">
+        <md-icon>payments</md-icon>
+        <p>Formas de pagamento</p>
       </sidebar-link>
       <sidebar-link to="/maps">
         <md-icon>location_on</md-icon>
-        <p>Maps</p>
+        <p>Tags</p>
       </sidebar-link>
       <sidebar-link to="/notifications">
-        <md-icon>notifications</md-icon>
-        <p>Notifications</p>
+        <md-icon>sync_alt </md-icon>
+        <p>Transferências</p>
       </sidebar-link>
-      <sidebar-link to="/upgrade" class="active-pro">
-        <md-icon>unarchive</md-icon>
-        <p>Upgrade to PRO</p>
+      <sidebar-link to="/user">
+        <md-icon>person</md-icon>
+        <p>Perfil</p>
+      </sidebar-link>
+      <sidebar-link to="/logout" class="">
+        <md-icon>logout</md-icon>
+        <p>Sair</p>
       </sidebar-link>
     </side-bar>
 
