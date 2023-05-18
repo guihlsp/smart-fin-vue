@@ -1,10 +1,10 @@
 import DashboardLayout from "@/views/Layout/DashboardLayout.vue";
-// import Site from "@/views/Site.vue"
+import PageNotFound from "@/views/PageNotFound.vue"
 import Cadastro from "@/views/Cadastro.vue";
 import Login from "@/views/Login.vue";
 import Dashboard from "@/views/Dashboard.vue";
 import UserProfile from "@/views/UserProfile.vue";
-import TableList from "@/views/TableList.vue";
+import Categorias from "@/views/Categorias/Listar.vue";
 import Typography from "@/views/Typography.vue";
 import Icons from "@/views/Icons.vue";
 import Maps from "@/views/Maps.vue";
@@ -28,6 +28,11 @@ const routes = [
     component: Login,
   },
   {
+    path: "/pageNotFound",
+    name: "PageNotFound",
+    component: PageNotFound,
+  },
+  {
     path: "/",
     component: DashboardLayout,
     // redirect: "/dashboard",
@@ -43,9 +48,9 @@ const routes = [
         component: UserProfile,
       },
       {
-        path: "table",
-        name: "Table List",
-        component: TableList,
+        path: "categorias",
+        name: "Categorias",
+        component: Categorias,
       },
       {
         path: "typography",

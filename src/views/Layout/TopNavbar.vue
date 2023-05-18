@@ -2,14 +2,11 @@
   <md-toolbar md-elevation="0" class="md-transparent">
     <div class="md-toolbar-row">
       <div class="md-toolbar-section-start">
-        <h3 class="md-title">{{ $route.name }}</h3>
+        <Breadcrumb :items="breadcrumb"></Breadcrumb>
       </div>
       <div class="md-toolbar-section-end">
-        <md-button
-          class="md-just-icon md-simple md-toolbar-toggle"
-          :class="{ toggled: $sidebar.showSidebar }"
-          @click="toggleSidebar"
-        >
+        <md-button class="md-just-icon md-simple md-toolbar-toggle" :class="{ toggled: $sidebar.showSidebar }"
+          @click="toggleSidebar">
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
@@ -17,11 +14,7 @@
 
         <div class="md-collapse">
           <div class="md-autocomplete">
-            <md-autocomplete
-              class="search"
-              v-model="selectedEmployee"
-              :md-options="employees"
-            >
+            <md-autocomplete class="search" v-model="selectedEmployee" :md-options="employees">
               <label>Search...</label>
             </md-autocomplete>
           </div>
@@ -49,17 +42,10 @@
             </md-list-item> -->
 
             <li class="md-list-item">
-              <a
-                href="#/notifications"
-                class="md-list-item-router md-list-item-container md-button-clean dropdown"
-              >
+              <a href="#/notifications" class="md-list-item-router md-list-item-container md-button-clean dropdown">
                 <div class="md-list-item-content">
                   <drop-down>
-                    <md-button
-                      slot="title"
-                      class="md-button md-just-icon md-simple"
-                      data-toggle="dropdown"
-                    >
+                    <md-button slot="title" class="md-button md-just-icon md-simple" data-toggle="dropdown">
                       <md-icon>notifications</md-icon>
                       <span class="notification">5</span>
                       <p class="hidden-lg hidden-md">Notifications</p>
@@ -88,7 +74,9 @@
 </template>
 
 <script>
-export default {
+import Breadcrumb from './Breadcrumb.vue';
+
+export default {  
   data() {
     return {
       selectedEmployee: null,
@@ -102,13 +90,28 @@ export default {
         "Ryan Howard",
         "Kevin Malone",
       ],
+      breadcrumb: [
+        {
+          text: 'Dashboard',
+          href: '/dashboard'
+        },
+        {
+          text: this.$route.name,
+          active: true
+        },
+      ]
     };
+  },
+  beforeRouteUpdate(to, from, next) {
+    this.currentRoute = to.path
+    next()
   },
   methods: {
     toggleSidebar() {
       this.$sidebar.displaySidebar(!this.$sidebar.showSidebar);
     },
   },
+  components: { Breadcrumb }
 };
 </script>
 

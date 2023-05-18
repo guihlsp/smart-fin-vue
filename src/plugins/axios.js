@@ -19,6 +19,20 @@ const AxiosPlugin = {
       }
     );
 
+    api.interceptors.response.use(
+      response => response,
+      error => {
+        if(error.response && error.response.status === 401) {
+          window.location.href = '/login';
+        }
+        if(error.response && error.response.status === 404){
+          window.location.href = '/pageNotFound'
+        }
+        return Promise.reject(error);
+      }
+    );
+    
+
     Vue.prototype.$api = api;
   },
 };

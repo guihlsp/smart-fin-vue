@@ -10,6 +10,7 @@ import AxiosPlugin from "./plugins/axios";
 import GlobalComponents from "./globalComponents";
 import GlobalDirectives from "./globalDirectives";
 import Notifications from "./components/NotificationPlugin";
+import LoadingPlugin from './plugins/loading.js'
 
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
@@ -33,6 +34,7 @@ const router = new VueRouter({
 
 Vue.prototype.$Chartist = Chartist;
 
+Vue.use(LoadingPlugin)
 Vue.use(BootstrapVue);
 Vue.use(AxiosPlugin);
 Vue.use(VueRouter);

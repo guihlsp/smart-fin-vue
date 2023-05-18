@@ -41,7 +41,7 @@
               <md-icon><a>lock</a></md-icon>
             </md-field>
             <span class="md-error" v-if="!$v.form.password.required">Senha obrigatória</span>
-            <md-checkbox disabled :value="disabled"></md-checkbox>
+            <br>
             <i> Ao se cadastrar, você concorda com os <a style="cursor: pointer;" @click="showDialog = true">termos e condições</a></i>
           </b-form-group>
           <div class="row mt-3">

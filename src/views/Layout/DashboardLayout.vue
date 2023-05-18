@@ -11,7 +11,7 @@
         <md-icon>dashboard</md-icon>
         <p>Dashboard</p>
       </sidebar-link>
-      <sidebar-link to="/table">
+      <sidebar-link to="/movimentacoes">
         <md-icon>currency_exchange</md-icon>
         <p>Movimentações</p>
       </sidebar-link>
@@ -19,7 +19,7 @@
         <md-icon>account_balance</md-icon>
         <p>Contas bancárias</p>
       </sidebar-link>
-      <sidebar-link to="/icons">
+      <sidebar-link to="/categorias">
         <md-icon>category</md-icon>
         <p>Categorias</p>
       </sidebar-link>
