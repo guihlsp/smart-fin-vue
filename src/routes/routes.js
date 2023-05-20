@@ -35,7 +35,6 @@ const routes = [
   {
     path: "/",
     component: DashboardLayout,
-    // redirect: "/dashboard",
     children: [
       {
         path: "dashboard",
@@ -51,6 +50,21 @@ const routes = [
         path: "categorias",
         name: "Categorias",
         component: Categorias,
+      },
+      {
+        path: "categorias/adicionar",
+        name: "AdicionarCategoria",
+        component: () => import('@/views/Categorias/Adicionar.vue'),
+      },
+      {
+        path: "categorias/editar/:id",
+        name: "EditarCategoria",
+        component: () => import('@/views/Categorias/Editar'),
+      },
+      {
+        path: "categorias/visualizar/:id",
+        name: "VisualizarCategoria",
+        component: () => import('@/views/Categorias/Visualizar'),
       },
       {
         path: "typography",

@@ -35,10 +35,6 @@
         <md-icon>sync_alt </md-icon>
         <p>Transferências</p>
       </sidebar-link>
-      <sidebar-link to="/user">
-        <md-icon>person</md-icon>
-        <p>Perfil</p>
-      </sidebar-link>
       <sidebar-link to="/logout" class="">
         <md-icon>logout</md-icon>
         <p>Sair</p>
@@ -56,14 +52,14 @@
 
       <dashboard-content> </dashboard-content>
 
-      <content-footer v-if="!$route.meta.hideFooter"></content-footer>
+      <!-- <content-footer v-if="!$route.meta.hideFooter"></content-footer> -->
     </div>
   </div>
 </template>
 
 <script>
 import TopNavbar from "./TopNavbar.vue";
-import ContentFooter from "./ContentFooter.vue";
+// import ContentFooter from "./ContentFooter.vue";
 import DashboardContent from "./Content.vue";
 import MobileMenu from "@/views/Layout/MobileMenu.vue";
 import FixedPlugin from "./Extra/FixedPlugin.vue";
@@ -72,7 +68,7 @@ export default {
   components: {
     TopNavbar,
     DashboardContent,
-    ContentFooter,
+    // ContentFooter,
     MobileMenu,
     FixedPlugin,
   },

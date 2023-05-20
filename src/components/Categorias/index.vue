@@ -1,36 +1,35 @@
 <template>
   <div>
-    <template>
-        <b-table striped hover :items="categorias" :fields="campos" responsive ref="table">
-          <template v-slot:head(acoes)="data">
-            <th class=" ">{{ data.label }}</th>
-          </template>
-          <template v-slot:cell(acoes)="data">
-            <div class="coluna-acoes">
-              <md-button class="acoes md-success md-dense md-just-icon" @click="visualizarCategoria(data.item.id)">
-                <md-icon>
-                  search
-                </md-icon>
-              </md-button>
-              <md-button class="acoes md-primary md-dense md-just-icon" @click="editarCategoria(data.item.id)">
-                <md-icon>
-                  edit
-                </md-icon>
-              </md-button>
-              <md-button class="acoes md-danger md-dense md-just-icon" @click="excluirCategoria(data.item.id)">
-                <md-icon>
-                  delete
-                </md-icon>
-              </md-button>
-            </div>
-          </template>
-        </b-table>
-    </template>
-    <md-table-empty-state md-label="Nenhuma categoria encontrada"
-      :md-description="`Nenhuma categoria encontrada. Tente outra busca ou adicione uma nova categoria.`"
-      v-if="!categorias || categorias.length == 0">
-      <md-button class="md-primary md-raised" @click="adicionarCategoria">Adicionar nova categoria</md-button>
-    </md-table-empty-state>
+    <div v-if="carregando" class="d-flex justify-content-center mt-5 mb-3">
+      <b-spinner style="width: 100px; height: 100px;" variant="success" label="Loading..."></b-spinner>
+    </div>
+    <b-table v-else striped hover :items="categorias" :fields="campos" responsive ref="table">
+      <template v-slot:head(acoes)="data">
+        <th class="d-flex justify-content-end">{{ data.label }}</th>
+      </template>
+      <template v-slot:cell(acoes)="data">
+        <div class="coluna-acoes">
+          <md-button class="acoes md-info md-dense md-just-icon" :to="'categorias/visualizar/' + data.item.id">
+            <md-icon>
+              search
+            </md-icon>
+          </md-button>
+          <md-button class="acoes md-primary md-dense md-just-icon" :to="'categorias/editar/' + data.item.id">
+            <md-icon>
+              edit
+            </md-icon>
+          </md-button>
+          <md-button class="acoes md-danger md-dense md-just-icon" @click="abrirModal(data.item.id)">
+            <md-icon>
+              delete
+            </md-icon>
+          </md-button>
+        </div>
+        <md-dialog-confirm :md-active.sync="modalAberto" md-title="Categorias"
+        md-content="Tem certeza que deseja excluir a categoria ?" md-confirm-text="Confirmar" md-cancel-text="Cancelar"
+        @md-cancel="onCancel" @md-confirm="onConfirm(data.item.id)"/>
+      </template>
+    </b-table>
   </div>
 </template>
 
@@ -42,42 +41,42 @@ export default {
     return {
       categorias: [],
       paginatedCategorias: [],
-      loading: true,
-      campos:
-        [
-          {
-            key: 'id',
-            label: '#',
-            sortable: false
-          },
-          {
-            key: 'descricao',
-            label: 'Descrição',
-            sortable: true
-          },
-          {
-            key: 'ativa',
-            label: 'Ativa',
-            sortable: true,
-            class: 'text-center'
-          },
-          {
-            key: 'criado_em',
-            label: 'Criado em',
-            sortable: false,
-            class: 'text-center'
-          },
-          {
-            key: 'acoes',
-            label: 'Ações',
-            sortable: false,
-            class: 'd-flex justify-content-center'
-          }
-        ],
+      carregando: false,
+      campos: [
+        {
+          key: 'id',
+          label: '#',
+          sortable: false
+        },
+        {
+          key: 'descricao',
+          label: 'Descrição',
+          sortable: true
+        },
+        {
+          key: 'ativa',
+          label: 'Ativa',
+          sortable: true,
+          class: 'text-center'
+        },
+        {
+          key: 'criado_em',
+          label: 'Criado em',
+          sortable: false,
+          class: 'text-center'
+        },
+        {
+          key: 'acoes',
+          label: 'Ações',
+          sortable: false,
+        }
+      ],
+      modalAberto: false,
+      idExclusao: null,
     }
   },
   mounted() {
-    this.$startLoading();
+    this.carregando = true
     this.carregaDados();
   },
   methods: {
@@ -88,27 +87,63 @@ export default {
         }).catch(error => {
           console.error(error);
         });
+      setTimeout(() => {
+        this.carregando = false
+      }, 500);
     },
     adicionarCategoria() {
       this.$router.push('categorias/adicionar')
     },
-    visualizarCategoria(){
-      this.$refs.table.refresh()
+    excluirCategoria(id) {
+      this.$api.delete('/categorias/deletar/' + id).then(response => {
+        this.$notify({
+          message: response.data.message,
+          icon: 'done',
+          type: 'success',
+          horizontalAlign: 'center',
+          verticalAlign: 'top',
+        });
+      }).catch(error => {
+        this.$notify({
+          message: error,
+          icon: 'warning',
+          type: 'warning',
+          horizontalAlign: 'center',
+          verticalAlign: 'top',
+        });
+        console.error(error);
+      })
+      this.carregaDados();
+    },
+    abrirModal(id) {
+      this.idExclusao = id;
+      this.modalAberto = true;
+    },
+    onConfirm() {
+      if (this.idExclusao !== null) {
+        this.excluirCategoria(this.idExclusao);
+      }
+      this.idExclusao = null;
+    },
+    onCancel() {
+      this.modalAberto = false
+      this.idExclusao = null;
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.acoes{
-  border-radius: 0% !important;
+.acoes {
+  border-radius: 10% !important;
   width: 25px !important;
-  height: 30px !important;
+  height: 35px !important;
 }
+
 .coluna-acoes {
   display: flex;
   justify-content: flex-end;
-  align-items: center;
+  align-items: start;
   gap: 3px;
 }
 </style>
