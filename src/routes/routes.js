@@ -24,7 +24,7 @@ const routes = [
   },
   {
     path: "/pageNotFound",
-    name: "PageNotFound",
+    name: "Página não encontrada",
     component: PageNotFound,
   },
   {
@@ -48,37 +48,37 @@ const routes = [
       },
       {
         path: "categorias/adicionar",
-        name: "AdicionarCategoria",
+        name: "Adicionar categoria",
         component: () => import('@/views/Categorias/Adicionar.vue'),
       },
       {
         path: "categorias/editar/:id",
-        name: "EditarCategoria",
+        name: "Editar categoria",
         component: () => import('@/views/Categorias/Editar'),
       },
       {
         path: "categorias/visualizar/:id",
-        name: "VisualizarCategoria",
+        name: "Visualizar categoria",
         component: () => import('@/views/Categorias/Visualizar'),
       },
       {
         path: "contas_bancarias",
-        name: "ContasBancarias",
+        name: "Contas bancárias",
         component: ContasBancarias,
       },
       {
         path: "contas_bancarias/adicionar",
-        name: "AdicionarContaBancaria",
+        name: "Adicionar conta bancária",
         component: () => import('@/views/ContasBancarias/Adicionar.vue'),
       },
       {
         path: "contas_bancarias/editar/:id",
-        name: "EditarContaBancaria",
+        name: "Editar conta bancária",
         component: () => import('@/views/ContasBancarias/Editar'),
       },
       {
         path: "contas_bancarias/visualizar/:id",
-        name: "VisualizarContaBancaria",
+        name: "Visualizar conta bancária",
         component: () => import('@/views/ContasBancarias/Visualizar'),
       },
       {
@@ -88,17 +88,17 @@ const routes = [
       },
       {
         path: "tags/adicionar",
-        name: "AdicionarTag",
+        name: "Adicionar tag",
         component: () => import('@/views/Tags/Adicionar.vue'),
       },
       {
         path: "tags/editar/:id",
-        name: "EditarTag",
+        name: "Editar tag",
         component: () => import('@/views/Tags/Editar'),
       },
       {
         path: "tags/visualizar/:id",
-        name: "VisualizarTag",
+        name: "Visualizar tag",
         component: () => import('@/views/Tags/Visualizar'),
       },
       {

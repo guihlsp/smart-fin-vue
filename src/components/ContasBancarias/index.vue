@@ -4,6 +4,14 @@
       <b-spinner style="width: 100px; height: 100px;" variant="success" label="Loading..."></b-spinner>
     </div>
     <b-table v-else striped hover :items="contasBancarias" :fields="campos" responsive ref="table">
+      <template v-slot:cell(saldo)="data">
+        <span v-if="data.item.saldo >= 0" class="text-success">{{ data.item.saldo | formatarSaldo}}</span>
+        <span v-else class="text-danger">{{ data.item.saldo | formatarSaldo}}</span>
+      </template>
+      <template v-slot:cell(ativa)="data">
+        <b-badge v-if="data.item.ativa == 'Sim'" class="bg-success">{{ data.item.ativa }}</b-badge>
+        <b-badge v-else class="bg-danger">{{ data.item.ativa }}</b-badge>
+      </template>
       <template v-slot:head(acoes)="data">
         <th class="d-flex justify-content-end">{{ data.label }}</th>
       </template>
@@ -26,8 +34,8 @@
           </md-button>
         </div>
         <md-dialog-confirm :md-active.sync="modalAberto" md-title="Contas bancárias"
-        md-content="Tem certeza que deseja excluir a conta bancária ?" md-confirm-text="Confirmar" md-cancel-text="Cancelar"
-        @md-cancel="onCancel" @md-confirm="onConfirm(data.item.id)"/>
+          md-content="Tem certeza que deseja excluir a conta bancária ?" md-confirm-text="Confirmar"
+          md-cancel-text="Cancelar" @md-cancel="onCancel" @md-confirm="onConfirm(data.item.id)" />
       </template>
     </b-table>
   </div>
@@ -36,6 +44,14 @@
 <script>
 
 export default {
+  filters: {
+    formatarSaldo(valor) {
+      return `R$ ${parseFloat(valor).toLocaleString('pt-BR', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      })}`;
+    }
+  },
   name: 'Lista',
   data() {
     return {

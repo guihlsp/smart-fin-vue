@@ -4,6 +4,10 @@
       <b-spinner style="width: 100px; height: 100px;" variant="success" label="Loading..."></b-spinner>
     </div>
     <b-table v-else striped hover :items="categorias" :fields="campos" responsive ref="table">
+      <template v-slot:cell(ativa)="data">
+          <b-badge v-if="data.item.ativa == 'Sim'" class="bg-success">{{ data.item.ativa }}</b-badge>
+          <b-badge v-else class="bg-danger">{{ data.item.ativa }}</b-badge>
+      </template>
       <template v-slot:head(acoes)="data">
         <th class="d-flex justify-content-end">{{ data.label }}</th>
       </template>

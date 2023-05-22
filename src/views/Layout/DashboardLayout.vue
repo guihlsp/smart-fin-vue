@@ -27,7 +27,7 @@
         <md-icon>payments</md-icon>
         <p>Formas de pagamento</p>
       </sidebar-link>
-      <sidebar-link to="/maps">
+      <sidebar-link to="/tags">
         <md-icon>location_on</md-icon>
         <p>Tags</p>
       </sidebar-link>

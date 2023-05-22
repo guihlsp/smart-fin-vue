@@ -3,16 +3,21 @@
         <notifications></notifications>
         <md-card>
             <md-card-header class="d-flex justify-content-between" data-background-color="green">
-                <h4 class="title h3">{{ $route.path.includes('editar') ? 'Editar' : 'Adicionar' }} conta bancária</h4>
+                <h4 class="title h3">{{ $route.path.includes('editar') ? 'Editar' : 'Adicionar' }} tag</h4>
             </md-card-header>
             <md-card-content>
                 <b-form @submit.prevent="valida" novalidate class="row">
                     <b-form-group label-for="descricao" class="col-6">
                         <md-field :class="getValidationClass('descricao')">
                             <label>Descrição</label>
-                            <md-input id="descricao" type="text" v-model="form.tag.descricao"
-                                autocomplete="off" :disabled="carregando">
+                            <md-input id="descricao" type="text" v-model="form.tag.descricao" autocomplete="off"
+                                :disabled="carregando">
                             </md-input>
+                            <verte id="color-picker" :enableAlpha="false" :showHistory="null" picker="square" model="hex">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M0 0h24v24H0z"/>
+                                </svg>
+                            </verte>
                             <span class="md-error" v-if="!$v.form.tag.descricao.required">Descrição obrigatória!</span>
                         </md-field>
                     </b-form-group>
@@ -20,8 +25,7 @@
                     <b-form-group label-for="ativa" class="col-6 md-layout-item">
                         <md-field>
                             <label>Ativa</label>
-                            <md-select id="ativa" v-model="form.tag.ativa"
-                                autocomplete="off" :disabled="carregando">
+                            <md-select id="ativa" v-model="form.tag.ativa" autocomplete="off" :disabled="carregando">
                                 <md-option value=1>Sim</md-option>
                                 <md-option value=0>Não</md-option>
                             </md-select>
@@ -29,9 +33,9 @@
                     </b-form-group>
                     <div class="mt-3">
                         <md-button type="submit" class="md-primary mb-3">
-                                {{ $route.path.includes('editar') ? 'Salvar' : 'Cadastrar' }}
+                            {{ $route.path.includes('editar') ? 'Salvar' : 'Cadastrar' }}
                         </md-button>
-                        <md-button style="margin-left: 15px" to="/tgas">
+                        <md-button style="margin-left: 15px" to="/tags">
                             Cancelar
                         </md-button>
                     </div>
@@ -44,6 +48,8 @@
   
 <script>
 
+import Verte from 'verte'
+import 'verte/dist/verte.css';
 import { validationMixin } from 'vuelidate'
 import {
     required,
@@ -51,6 +57,9 @@ import {
 
 
 export default {
+    components: {
+        Verte
+    },
     mixins: [validationMixin],
     data() {
         return {
@@ -77,15 +86,15 @@ export default {
         async carregaDados() {
             this.carregando = true
             const id = this.$route.params.id;
-            await this.$api.get(`/tgas/editar/${id}`)
-            .then(response => {
-                this.form.tag = response.data.ContaBancaria;
-                setTimeout(() => {
-                    this.carregando = false
-                }, 500)
-            }).catch(error => {
-                console.error(error);
-            });
+            await this.$api.get(`/tags/editar/${id}`)
+                .then(response => {
+                    this.form.tag = response.data.Tag;
+                    setTimeout(() => {
+                        this.carregando = false
+                    }, 500)
+                }).catch(error => {
+                    console.error(error);
+                });
         },
         valida() {
             this.$v.$touch()
@@ -103,13 +112,17 @@ export default {
             }
         },
         async salvaDados() {
+            let colorPicker = document.getElementById("color-picker");
+            let valorPicker = colorPicker.value;
+
+            console.log(valorPicker);
             this.carregando = true
             let response;
             if (this.$route.path.includes('editar')) {
                 let id = this.$route.params.id;
-                response = await this.$api.put(`/tgas/editar/${id}`, this.form.tag)
+                response = await this.$api.put(`/tags/editar/${id}`, this.form.tag)
             } else {
-                response = await this.$api.post('/tgas/adicionar', this.form.tag)
+                response = await this.$api.post('/tags/adicionar', this.form.tag)
             }
             if (response.data.message) {
                 this.$notify({
@@ -128,7 +141,7 @@ export default {
                     verticalAlign: 'top',
                 });
             }
-            this.$router.push('/tgas')
+            this.$router.push('/tags')
             this.carregando = false
         }
     },
@@ -136,6 +149,7 @@ export default {
         if (this.$route.path.includes('editar')) {
             this.carregaDados();
         }
+        
     },
 };
 </script>

@@ -4,8 +4,8 @@
       <div class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-100">
         <md-card>
           <md-card-header class="d-flex justify-content-between" data-background-color="green">
-            <h4 class="title h3">Contas bancárias</h4>
-            <md-button class="md-primary" to="contas_bancarias/adicionar"><md-icon>add</md-icon>Adicionar</md-button>
+            <h4 class="title h3">Tags</h4>
+            <md-button class="md-primary" to="tags/adicionar"><md-icon>add</md-icon>Adicionar</md-button>
           </md-card-header>
           <md-card-content>
             <Lista table-header-color="green"></Lista>

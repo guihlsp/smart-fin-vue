@@ -5,7 +5,7 @@
 </template>
   
 <script>
-import VisualizarComponent from '@/components/ContasBancarias/Visualizar.vue'
+import VisualizarComponent from '@/components/Tags/Visualizar.vue'
 
 export default {
     name: 'Visualizar',
@@ -14,11 +14,3 @@ export default {
     }
 };
 </script>
-<style lang="scss" scoped>
-.md-progress-bar {
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-}
-</style>
