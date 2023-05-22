@@ -15,7 +15,7 @@
         <md-icon>currency_exchange</md-icon>
         <p>Movimentações</p>
       </sidebar-link>
-      <sidebar-link to="/typography">
+      <sidebar-link to="/contas_bancarias">
         <md-icon>account_balance</md-icon>
         <p>Contas bancárias</p>
       </sidebar-link>

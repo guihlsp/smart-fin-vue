@@ -5,18 +5,13 @@ import Login from "@/views/Login.vue";
 import Dashboard from "@/views/Dashboard.vue";
 import UserProfile from "@/views/UserProfile.vue";
 import Categorias from "@/views/Categorias/Listar.vue";
-import Typography from "@/views/Typography.vue";
+import Tags from "@/views/Tags/Listar.vue";
+import ContasBancarias from "@/views/ContasBancarias/Listar.vue";
 import Icons from "@/views/Icons.vue";
-import Maps from "@/views/Maps.vue";
 import Notifications from "@/views/Notifications.vue";
 import UpgradeToPRO from "@/views/UpgradeToPRO.vue";
 
 const routes = [
-  // {
-  //   path: '/site',
-  //   name: 'Site',
-  //   component: Site
-  // },
   {
     path: "/cadastro",
     name: "Cadastro",
@@ -67,22 +62,49 @@ const routes = [
         component: () => import('@/views/Categorias/Visualizar'),
       },
       {
-        path: "typography",
-        name: "Typography",
-        component: Typography,
+        path: "contas_bancarias",
+        name: "ContasBancarias",
+        component: ContasBancarias,
+      },
+      {
+        path: "contas_bancarias/adicionar",
+        name: "AdicionarContaBancaria",
+        component: () => import('@/views/ContasBancarias/Adicionar.vue'),
+      },
+      {
+        path: "contas_bancarias/editar/:id",
+        name: "EditarContaBancaria",
+        component: () => import('@/views/ContasBancarias/Editar'),
+      },
+      {
+        path: "contas_bancarias/visualizar/:id",
+        name: "VisualizarContaBancaria",
+        component: () => import('@/views/ContasBancarias/Visualizar'),
+      },
+      {
+        path: "tags",
+        name: "Tags",
+        component: Tags,
+      },
+      {
+        path: "tags/adicionar",
+        name: "AdicionarTag",
+        component: () => import('@/views/Tags/Adicionar.vue'),
+      },
+      {
+        path: "tags/editar/:id",
+        name: "EditarTag",
+        component: () => import('@/views/Tags/Editar'),
+      },
+      {
+        path: "tags/visualizar/:id",
+        name: "VisualizarTag",
+        component: () => import('@/views/Tags/Visualizar'),
       },
       {
         path: "icons",
         name: "Icons",
         component: Icons,
-      },
-      {
-        path: "maps",
-        name: "Maps",
-        meta: {
-          hideFooter: true,
-        },
-        component: Maps,
       },
       {
         path: "notifications",
