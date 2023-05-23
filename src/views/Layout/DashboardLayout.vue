@@ -23,7 +23,7 @@
         <md-icon>category</md-icon>
         <p>Categorias</p>
       </sidebar-link>
-      <sidebar-link to="/icons">
+      <sidebar-link to="/formas_pagamento">
         <md-icon>payments</md-icon>
         <p>Formas de pagamento</p>
       </sidebar-link>

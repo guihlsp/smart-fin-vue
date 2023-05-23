@@ -13,7 +13,7 @@
                             <md-input id="descricao" type="text" v-model="form.tag.descricao" autocomplete="off"
                                 :disabled="carregando">
                             </md-input>
-                            <verte id="color-picker" :enableAlpha="false" :showHistory="null" picker="square" model="hex">
+                            <verte v-model="form.tag.cor_hexa" :enableAlpha="false" picker="square" model="hex">
                                 <svg viewBox="0 0 24 24">
                                     <path d="M0 0h24v24H0z"/>
                                 </svg>
@@ -67,6 +67,7 @@ export default {
                 tag: {
                     descricao: null,
                     ativa: 1,
+                    cor_hexa: ''
                 }
             },
             error: null,
@@ -112,10 +113,6 @@ export default {
             }
         },
         async salvaDados() {
-            let colorPicker = document.getElementById("color-picker");
-            let valorPicker = colorPicker.value;
-
-            console.log(valorPicker);
             this.carregando = true
             let response;
             if (this.$route.path.includes('editar')) {

@@ -144,7 +144,7 @@ export default {
             horizontalAlign: 'center',
             verticalAlign: 'top',
           });
-          // this.$router.push('/dashboard')
+          this.$router.push('/dashboard')
         } else {
           this.$notify({
             message: response.data.error,

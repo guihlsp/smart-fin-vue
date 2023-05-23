@@ -3,30 +3,18 @@
     <div v-if="carregando" class="d-flex justify-content-center mt-5 mb-3">
       <b-spinner style="width: 100px; height: 100px;" variant="success" label="Loading..."></b-spinner>
     </div>
-    <b-table v-else outlined hover :items="tags" :fields="campos" responsive ref="table">
-      <template v-slot:cell(ativa)="data">
-        <td class="d-flex justify-content-center">
-          <b-badge v-if="data.item.ativa == 'Sim'" class="bg-success">{{ data.item.ativa }}</b-badge>
-          <b-badge v-else class="bg-danger">{{ data.item.ativa }}</b-badge>
-        </td>
-      </template>
-      <template v-slot:cell(descricao)="data">
-        <td class="">
-          <h5><b-badge :style="'background-color:'+ data.item.cor_hexa" >{{data.item.descricao}}
-          </b-badge></h5>
-        </td>
-      </template>
+    <b-table v-else striped hover :items="formasPagamento" :fields="campos" responsive ref="table">
       <template v-slot:head(acoes)="data">
         <th class="d-flex justify-content-end">{{ data.label }}</th>
       </template>
       <template v-slot:cell(acoes)="data">
         <div class="coluna-acoes">
-          <md-button class="acoes md-info md-dense md-just-icon" :to="'tags/visualizar/' + data.item.id">
+          <md-button class="acoes md-info md-dense md-just-icon" :to="'formas_pagamento/visualizar/' + data.item.id">
             <md-icon>
               search
             </md-icon>
           </md-button>
-          <md-button class="acoes md-primary md-dense md-just-icon" :to="'tags/editar/' + data.item.id">
+          <md-button class="acoes md-primary md-dense md-just-icon" :to="'formas_pagamento/editar/' + data.item.id">
             <md-icon>
               edit
             </md-icon>
@@ -37,9 +25,9 @@
             </md-icon>
           </md-button>
         </div>
-        <md-dialog-confirm :md-active.sync="modalAberto" md-title="Tags"
-        md-content="Tem certeza que deseja excluir a tag ?" md-confirm-text="Confirmar" md-cancel-text="Cancelar"
-        @md-cancel="onCancel" @md-confirm="onConfirm(data.item.id)"/>
+        <md-dialog-confirm :md-active.sync="modalAberto" md-title="Formas de pagamento"
+          md-content="Tem certeza que deseja excluir a forma de pagamento ?" md-confirm-text="Confirmar"
+          md-cancel-text="Cancelar" @md-cancel="onCancel" @md-confirm="onConfirm(data.item.id)" />
       </template>
     </b-table>
   </div>
@@ -51,7 +39,7 @@ export default {
   name: 'Lista',
   data() {
     return {
-      tags: [],
+      formasPagamento: [],
       carregando: false,
       campos: [
         {
@@ -60,15 +48,19 @@ export default {
           sortable: false
         },
         {
-          key: 'descricao',
-          label: 'Descrição',
+          key: 'nome',
+          label: 'Nome',
           sortable: true
         },
         {
-          key: 'ativa',
-          label: 'Ativa',
-          sortable: true,
-          class: 'text-center'
+          key: 'tipo',
+          label: 'Tipo',
+          sortable: true
+        },
+        {
+          key: 'nome_conta_bancaria',
+          label: 'Conta bancária',
+          sortable: true
         },
         {
           key: 'criado_em',
@@ -92,9 +84,9 @@ export default {
   },
   methods: {
     carregaDados() {
-      this.$api.get('/tags')
+      this.$api.get('/formas_pagamento/')
         .then(response => {
-          this.tags = response.data.Tags
+          this.formasPagamento = response.data.FormasPagamento;
         }).catch(error => {
           console.error(error);
         });
@@ -102,11 +94,11 @@ export default {
         this.carregando = false
       }, 500);
     },
-    adicionarCategoria() {
-      this.$router.push('tags/adicionar')
+    adicionarFormaPagamento() {
+      this.$router.push('formas_pagamento/adicionar')
     },
-    excluirTag(id) {
-      this.$api.delete('/tags/deletar/' + id).then(response => {
+    excluirFormaPagamento(id) {
+      this.$api.delete('/formas_pagamento/deletar/' + id).then(response => {
         this.$notify({
           message: response.data.message,
           icon: 'done',
@@ -132,7 +124,7 @@ export default {
     },
     onConfirm() {
       if (this.idExclusao !== null) {
-        this.excluirTag(this.idExclusao);
+        this.excluirFormaPagamento(this.idExclusao);
       }
       this.idExclusao = null;
     },

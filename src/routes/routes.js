@@ -7,6 +7,7 @@ import UserProfile from "@/views/UserProfile.vue";
 import Categorias from "@/views/Categorias/Listar.vue";
 import Tags from "@/views/Tags/Listar.vue";
 import ContasBancarias from "@/views/ContasBancarias/Listar.vue";
+import FormasPagamento from "@/views/FormasPagamento/Listar.vue";
 import Icons from "@/views/Icons.vue";
 import Notifications from "@/views/Notifications.vue";
 import UpgradeToPRO from "@/views/UpgradeToPRO.vue";
@@ -100,6 +101,26 @@ const routes = [
         path: "tags/visualizar/:id",
         name: "Visualizar tag",
         component: () => import('@/views/Tags/Visualizar'),
+      },
+      {
+        path: "formas_pagamento",
+        name: "Formas de pagamento",
+        component: FormasPagamento,
+      },
+      {
+        path: "formas_pagamento/adicionar",
+        name: "Adicionar forma de pagamento",
+        component: () => import('@/views/FormasPagamento/Adicionar.vue'),
+      },
+      {
+        path: "formas_pagamento/editar/:id",
+        name: "Editar forma de pagamento",
+        component: () => import('@/views/FormasPagamento/Editar'),
+      },
+      {
+        path: "formas_pagamento/visualizar/:id",
+        name: "Visualizar forma de pagamento",
+        component: () => import('@/views/FormasPagamento/Visualizar'),
       },
       {
         path: "icons",
