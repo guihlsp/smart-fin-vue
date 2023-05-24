@@ -2,19 +2,13 @@
     <div class="md-layout">
         <md-card>
             <md-card-header class="d-flex justify-content-between" data-background-color="green">
-                <h4 class="title h3">Detalhes da conta bancária</h4>
+                <h4 class="title h3">Detalhes da forma de pagamento</h4>
             </md-card-header>
             <md-card-content>
                 <div v-if="carregando" class="d-flex justify-content-center mt-5 mb-3">
                     <b-spinner style="width: 100px; height: 100px;" variant="success" label="Loading..."></b-spinner>
                 </div>
-                <b-table v-else stacked :items="objetoToArray(contaBancaria)" :fields="campos" responsive>
-                    <template v-slot:cell(saldo)="data">
-                        {{ data.item.saldo | formatarSaldo }}
-                    </template>
-                    <template v-slot:cell(ativa)="data">
-                        {{ data.item.ativa | formatarSimNao }}
-                    </template>
+                <b-table v-else stacked :items="objetoToArray(formaPagamento)" :fields="campos" responsive>
                 </b-table>
             </md-card-content>
         </md-card>
@@ -25,27 +19,9 @@
 <script>
 
 export default {
-    filters: {
-        formatarSaldo(valor) {
-            return `R$ ${parseFloat(valor).toLocaleString('pt-BR', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
-            })}`;
-        },
-        formatarSimNao(opcao){
-            let opcaoFormatada = opcao == 1 ? 'Sim' : 'Não'
-            return opcaoFormatada
-        }
-    },
     data() {
         return {
-            contaBancaria: {
-                id: '',
-                saldo: '',
-                descricao: '',
-                ativa: null,
-                criado_em: ''
-            },
+            formaPagamento: {},
             campos: [
                 {
                     key: 'id',
@@ -53,18 +29,24 @@ export default {
                     sortable: false,
                 },
                 {
-                    key: 'descricao',
-                    label: 'Descrição',
+                    key: 'nome',
+                    label: 'Nome',
                     sortable: false,
                 },
                 {
-                    key: 'saldo',
-                    label: 'Saldo atual',
+                    key: 'tipo',
+                    label: 'Tipo',
                     sortable: false,
                 },
                 {
-                    key: 'ativa',
-                    label: 'Ativa',
+                    key: 'tipo_cartao',
+                    label: 'Tipo de cartão',
+                    sortable: false,
+                    class:'d-none',
+                },
+                {
+                    key: 'nome_conta_bancaria',
+                    label: 'Conta bancária',
                     sortable: false,
                 },
                 {
@@ -88,9 +70,10 @@ export default {
         async carregaDados() {
             this.carregando = true
             const id = this.$route.params.id;
-            await this.$api.get(`/contas_bancarias/visualizar/${id}`)
+            await this.$api.get(`/formas_pagamento/visualizar/${id}`)
                 .then(response => {
-                    this.contaBancaria = response.data.ContaBancaria;
+                    this.formaPagamento = response.data.FormaPagamento;
+                    this.formaPagamento.tipo_cartao ? this.campos[3].class = '' : 'd-none'
                     setTimeout(() => {
                         this.carregando = false
                     }, 500)
@@ -98,8 +81,8 @@ export default {
                     console.error(error);
                 });
         },
-        objetoToArray(contaBancaria) {
-            return [contaBancaria];
+        objetoToArray(formaPagamento) {
+            return [formaPagamento];
         },
     }
 }

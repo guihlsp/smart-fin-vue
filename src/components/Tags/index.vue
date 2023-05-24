@@ -3,17 +3,11 @@
     <div v-if="carregando" class="d-flex justify-content-center mt-5 mb-3">
       <b-spinner style="width: 100px; height: 100px;" variant="success" label="Loading..."></b-spinner>
     </div>
-    <b-table v-else outlined hover :items="tags" :fields="campos" responsive ref="table">
+    <b-table v-else striped hover :items="tags" :fields="campos" responsive ref="table">
       <template v-slot:cell(ativa)="data">
         <td class="d-flex justify-content-center">
           <b-badge v-if="data.item.ativa == 'Sim'" class="bg-success">{{ data.item.ativa }}</b-badge>
           <b-badge v-else class="bg-danger">{{ data.item.ativa }}</b-badge>
-        </td>
-      </template>
-      <template v-slot:cell(descricao)="data">
-        <td class="">
-          <h5><b-badge :style="'background-color:'+ data.item.cor_hexa" >{{data.item.descricao}}
-          </b-badge></h5>
         </td>
       </template>
       <template v-slot:head(acoes)="data">
@@ -22,17 +16,17 @@
       <template v-slot:cell(acoes)="data">
         <div class="coluna-acoes">
           <md-button class="acoes md-info md-dense md-just-icon" :to="'tags/visualizar/' + data.item.id">
-            <md-icon>
+            <md-icon class="btn-icon">
               search
             </md-icon>
           </md-button>
           <md-button class="acoes md-primary md-dense md-just-icon" :to="'tags/editar/' + data.item.id">
-            <md-icon>
+            <md-icon class="btn-icon">
               edit
             </md-icon>
           </md-button>
           <md-button class="acoes md-danger md-dense md-just-icon" @click="abrirModal(data.item.id)">
-            <md-icon>
+            <md-icon class="btn-icon">
               delete
             </md-icon>
           </md-button>
@@ -147,14 +141,15 @@ export default {
 <style lang="scss" scoped>
 .acoes {
   border-radius: 10% !important;
-  width: 25px !important;
-  height: 35px !important;
+  min-width: 20px !important;
+  width: 20px !important;
+  height: 20px !important;
 }
 
 .coluna-acoes {
   display: flex;
   justify-content: flex-end;
-  align-items: start;
   gap: 3px;
 }
+
 </style>

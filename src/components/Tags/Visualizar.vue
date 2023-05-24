@@ -7,11 +7,8 @@
             <md-card-content>
                 <b-table stacked :items="objetoToArray(tag)" :fields="campos" responsive>
                     <template v-slot:cell(ativa)="data">
-                        <div class="bg-red">
-                            <md-badge class="md-primary md-square" md-content="6">
-                                {{ data.item.ativa | formatarSimNao }}
-                            </md-badge>
-                        </div>
+                        <b-badge v-if="data.item.ativa == 1" class="bg-success">{{ data.item.ativa | formatarSimNao}}</b-badge>
+                        <b-badge v-else class="bg-danger">{{ data.item.ativa | formatarSimNao}}</b-badge>
                     </template>
                 </b-table>
             </md-card-content>
@@ -34,7 +31,7 @@ export default {
             tag: {
                 id: '',
                 descricao: '',
-                ativa: null,
+                ativa: '',
                 criado_em: ''
             },
             campos: [
@@ -74,7 +71,7 @@ export default {
         async carregaDados() {
             this.carregando = true
             const id = this.$route.params.id;
-            await this.$api.get(`/categorias/visualizar/${id}`)
+            await this.$api.get(`/tags/visualizar/${id}`)
                 .then(response => {
                     this.tag = response.data.Tag;
                     setTimeout(() => {

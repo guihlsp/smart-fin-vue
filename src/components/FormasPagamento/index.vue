@@ -139,8 +139,9 @@ export default {
 <style lang="scss" scoped>
 .acoes {
   border-radius: 10% !important;
-  width: 25px !important;
-  height: 35px !important;
+  min-width: 20px !important;
+  width: 20px !important;
+  height: 20px !important;
 }
 
 .coluna-acoes {
