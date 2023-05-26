@@ -49,7 +49,7 @@
                         <b-form-group label-for="conta_bancaria_id" class="col-4 md-layout-item">
                             <md-field>
                                 <label>Conta bancária</label>
-                                <md-select id="conta_bancaria_id" v-model="form.formaPagamento.conta_bancaria_id"
+                                <md-select md-align-trigger id="conta_bancaria_id" v-model="form.formaPagamento.conta_bancaria_id"
                                     autocomplete="off" :disabled="carregando">
                                     <md-option v-for="contaBancaria in contasBancarias" :key="contaBancaria.id"
                                         :value="contaBancaria.id">

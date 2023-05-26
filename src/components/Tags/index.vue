@@ -3,7 +3,7 @@
     <div v-if="carregando" class="d-flex justify-content-center mt-5 mb-3">
       <b-spinner style="width: 100px; height: 100px;" variant="success" label="Loading..."></b-spinner>
     </div>
-    <b-table v-else striped hover :items="tags" :fields="campos" responsive ref="table">
+    <b-table v-if="!carregando && tags" striped hover :items="tags" :fields="campos" responsive ref="table">
       <template v-slot:cell(ativa)="data">
         <td class="d-flex justify-content-center">
           <b-badge v-if="data.item.ativa == 'Sim'" class="bg-success">{{ data.item.ativa }}</b-badge>
@@ -36,6 +36,14 @@
         @md-cancel="onCancel" @md-confirm="onConfirm(data.item.id)"/>
       </template>
     </b-table>
+    <div>
+      <md-empty-state v-if="!carregando && !tags"
+        md-icon="location_on"
+        md-label="Adicione sua primeira Tag"
+        md-description="Cadastrando tags você poderá identificar visualmente do que se trata cada movimentação.">
+        <md-button to="categorias/adicionar" class="md-primary md-raised">Adicionar tag</md-button>
+      </md-empty-state>
+    </div>
   </div>
 </template>
 

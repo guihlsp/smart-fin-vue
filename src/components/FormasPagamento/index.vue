@@ -3,7 +3,7 @@
     <div v-if="carregando" class="d-flex justify-content-center mt-5 mb-3">
       <b-spinner style="width: 100px; height: 100px;" variant="success" label="Loading..."></b-spinner>
     </div>
-    <b-table v-else striped hover :items="formasPagamento" :fields="campos" responsive ref="table">
+    <b-table v-if="!carregando && formasPagamento" striped hover :items="formasPagamento" :fields="campos" responsive ref="table">
       <template v-slot:head(acoes)="data">
         <th class="d-flex justify-content-end">{{ data.label }}</th>
       </template>
@@ -30,6 +30,14 @@
           md-cancel-text="Cancelar" @md-cancel="onCancel" @md-confirm="onConfirm(data.item.id)" />
       </template>
     </b-table>
+    <div>
+      <md-empty-state v-if="!carregando && !formasPagamento"
+        md-icon="payments"
+        md-label="Adicione sua primeira forma de pagamento"
+        md-description="Ao cadastrar formas de pagamento, poderá utilizá-las para registrar suas movimentações de entrada e saída.">
+        <md-button to="formas_pagamento/adicionar" class="md-primary md-raised">Adicionar forma de pagamento</md-button>
+      </md-empty-state>
+    </div>
   </div>
 </template>
 

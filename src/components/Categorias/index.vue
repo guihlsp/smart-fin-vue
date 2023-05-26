@@ -3,7 +3,7 @@
     <div v-if="carregando" class="d-flex justify-content-center mt-5 mb-3">
       <b-spinner style="width: 100px; height: 100px;" variant="success" label="Loading..."></b-spinner>
     </div>
-    <b-table v-else striped hover :items="categorias" :fields="campos" responsive ref="table">
+    <b-table v-if="!carregando && categorias" striped hover :items="categorias" :fields="campos" responsive ref="table">
       <template v-slot:cell(ativa)="data">
           <b-badge v-if="data.item.ativa == 'Sim'" class="bg-success">{{ data.item.ativa }}</b-badge>
           <b-badge v-else class="bg-danger">{{ data.item.ativa }}</b-badge>
@@ -34,6 +34,14 @@
         @md-cancel="onCancel" @md-confirm="onConfirm(data.item.id)"/>
       </template>
     </b-table>
+    <div>
+      <md-empty-state v-if="!carregando && !categorias"
+        md-icon="category"
+        md-label="Adicione sua primeira categoria"
+        md-description="Cadastrando categorias você poderá organizar seus recebimentos e pagamentos com facilidade.">
+        <md-button to="categorias/adicionar" class="md-primary md-raised">Adicionar categoria</md-button>
+      </md-empty-state>
+    </div>
   </div>
 </template>
 
@@ -44,7 +52,6 @@ export default {
   data() {
     return {
       categorias: [],
-      paginatedCategorias: [],
       carregando: false,
       campos: [
         {

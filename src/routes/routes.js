@@ -8,6 +8,7 @@ import Categorias from "@/views/Categorias/Listar.vue";
 import Tags from "@/views/Tags/Listar.vue";
 import ContasBancarias from "@/views/ContasBancarias/Listar.vue";
 import FormasPagamento from "@/views/FormasPagamento/Listar.vue";
+import Movimentacoes from "@/views/Movimentacoes/Listar.vue";
 import Icons from "@/views/Icons.vue";
 import Notifications from "@/views/Notifications.vue";
 import UpgradeToPRO from "@/views/UpgradeToPRO.vue";
@@ -121,6 +122,26 @@ const routes = [
         path: "formas_pagamento/visualizar/:id",
         name: "Visualizar forma de pagamento",
         component: () => import('@/views/FormasPagamento/Visualizar'),
+      },
+      {
+        path: "movimentacoes",
+        name: "Movimentacoes",
+        component: Movimentacoes,
+      },
+      {
+        path: "movimentacoes/adicionar",
+        name: "Adicionar movimentação",
+        component: () => import('@/views/Movimentacoes/Adicionar.vue'),
+      },
+      {
+        path: "movimentacoes/editar/:id",
+        name: "Editar movimentação",
+        component: () => import('@/views/Movimentacoes/Editar'),
+      },
+      {
+        path: "movimentacoes/visualizar/:id",
+        name: "Visualizar movimentação",
+        component: () => import('@/views/Movimentacoes/Visualizar'),
       },
       {
         path: "icons",

@@ -3,26 +3,18 @@
     <div v-if="carregando" class="d-flex justify-content-center mt-5 mb-3">
       <b-spinner style="width: 100px; height: 100px;" variant="success" label="Loading..."></b-spinner>
     </div>
-    <b-table v-if="!carregando && contasBancarias" striped hover :items="contasBancarias" :fields="campos" responsive ref="table">
-      <template v-slot:cell(saldo)="data">
-        <span v-if="data.item.saldo >= 0" class="text-success">{{ data.item.saldo | formatarSaldo}}</span>
-        <span v-else class="text-danger">{{ data.item.saldo | formatarSaldo}}</span>
-      </template>
-      <template v-slot:cell(ativa)="data">
-        <b-badge v-if="data.item.ativa == 'Sim'" class="bg-success">{{ data.item.ativa }}</b-badge>
-        <b-badge v-else class="bg-danger">{{ data.item.ativa }}</b-badge>
-      </template>
+    <b-table v-if="!carregando && movimentacoes" striped hover :items="movimentacoes" :fields="campos" responsive ref="table">
       <template v-slot:head(acoes)="data">
         <th class="d-flex justify-content-end">{{ data.label }}</th>
       </template>
       <template v-slot:cell(acoes)="data">
         <div class="coluna-acoes">
-          <md-button class="acoes md-info md-dense md-just-icon" :to="'contas_bancarias/visualizar/' + data.item.id">
+          <md-button class="acoes md-info md-dense md-just-icon" :to="'movimentacoes/visualizar/' + data.item.id">
             <md-icon>
               search
             </md-icon>
           </md-button>
-          <md-button class="acoes md-primary md-dense md-just-icon" :to="'contas_bancarias/editar/' + data.item.id">
+          <md-button class="acoes md-primary md-dense md-just-icon" :to="'movimentacoes/editar/' + data.item.id">
             <md-icon>
               edit
             </md-icon>
@@ -33,17 +25,17 @@
             </md-icon>
           </md-button>
         </div>
-        <md-dialog-confirm :md-active.sync="modalAberto" md-title="Contas bancárias"
-          md-content="Tem certeza que deseja excluir a conta bancária ?" md-confirm-text="Confirmar"
-          md-cancel-text="Cancelar" @md-cancel="onCancel" @md-confirm="onConfirm(data.item.id)" />
+        <md-dialog-confirm :md-active.sync="modalAberto" md-title="Movimentações"
+        md-content="Tem certeza que deseja excluir a tag ?" md-confirm-text="Confirmar" md-cancel-text="Cancelar"
+        @md-cancel="onCancel" @md-confirm="onConfirm(data.item.id)"/>
       </template>
     </b-table>
     <div>
-      <md-empty-state v-if="!carregando && !contasBancarias"
-        md-icon="account_balance"
-        md-label="Adicione sua primeira conta bancária"
-        md-description="Cadastrando suas contas bancárias você terá sempre informações sobre o saldo atual com facilidade.">
-        <md-button to="contas_bancarias/adicionar" class="md-primary md-raised">Adicionar conta bancária</md-button>
+      <md-empty-state v-if="!carregando && !movimentacoes"
+        md-icon="currency_exchange"
+        md-label="Adicione sua primeira movimentação"
+        md-description="Cadastrando as movimentações você poderá ter o controle total e com facilidade do seu fluxo de caixa.">
+        <md-button to="movimentacoes/adicionar" class="md-primary md-raised">Adicionar movimentação</md-button>
       </md-empty-state>
     </div>
   </div>
@@ -52,25 +44,16 @@
 <script>
 
 export default {
-  filters: {
-    formatarSaldo(valor) {
-      return `R$ ${parseFloat(valor).toLocaleString('pt-BR', {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      })}`;
-    }
-  },
   name: 'Lista',
   data() {
     return {
-      contasBancarias: [],
-      paginatedContasBancarias: [],
+      movimentacoes: [],
       carregando: false,
       campos: [
         {
-          key: 'id',
-          label: '#',
-          sortable: false
+          key: 'codigo',
+          label: 'Cód.',
+          sortable: true
         },
         {
           key: 'descricao',
@@ -78,15 +61,19 @@ export default {
           sortable: true
         },
         {
-          key: 'saldo',
-          label: 'Saldo',
+          key: 'tipo',
+          label: 'Tipo',
           sortable: true
         },
         {
-          key: 'ativa',
-          label: 'Ativa',
-          sortable: true,
-          class: 'text-center'
+          key: 'valor_total',
+          label: 'Valor total',
+          sortable: true
+        },
+        {
+          key: 'situacao',
+          label: 'Situação',
+          sortable: true
         },
         {
           key: 'criado_em',
@@ -110,9 +97,9 @@ export default {
   },
   methods: {
     carregaDados() {
-      this.$api.get('/contas_bancarias/')
+      this.$api.get('/movimentacoes')
         .then(response => {
-          this.contasBancarias = response.data.ContasBancarias;
+          this.movimentacoes = response.data.Movimentacoes
         }).catch(error => {
           console.error(error);
         });
@@ -121,10 +108,10 @@ export default {
       }, 500);
     },
     adicionarCategoria() {
-      this.$router.push('contas_bancarias/adicionar')
+      this.$router.push('movimentacoes/adicionar')
     },
-    excluirContaBancaria(id) {
-      this.$api.delete('/contas_bancarias/deletar/' + id).then(response => {
+    excluirMovimentacao(id) {
+      this.$api.delete('/movimentacoes/deletar/' + id).then(response => {
         this.$notify({
           message: response.data.message,
           icon: 'done',
@@ -150,7 +137,7 @@ export default {
     },
     onConfirm() {
       if (this.idExclusao !== null) {
-        this.excluirContaBancaria(this.idExclusao);
+        this.excluirMovimentacao(this.idExclusao);
       }
       this.idExclusao = null;
     },
@@ -173,7 +160,7 @@ export default {
 .coluna-acoes {
   display: flex;
   justify-content: flex-end;
-  align-items: start;
   gap: 3px;
 }
+
 </style>
