@@ -12,10 +12,7 @@
         </div>
       </a>
 
-      <a
-        target="_blank"
-        class="simple-text logo-normal"
-      >
+      <a target="_blank" class="simple-text logo-normal">
         {{ title }}
       </a>
     </div>

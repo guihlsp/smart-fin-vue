@@ -1,16 +1,15 @@
 <template>
-    <div class="content">
-        <Formulario></Formulario>
-    </div>
+  <div class="content">
+    <Formulario></Formulario>
+  </div>
 </template>
-  
+
 <script>
-import Formulario from '@/components/Movimentacoes/Formulario'
+import Formulario from "@/components/Movimentacoes/Formulario";
 export default {
-    name: 'Editar',
-    components: {
-        Formulario
-    }
+  name: "Editar",
+  components: {
+    Formulario,
+  },
 };
 </script>
-  

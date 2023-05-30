@@ -1,33 +1,33 @@
-import Loading from '@/views/Layout/Loading.vue'
+import Loading from "@/views/Layout/Loading.vue";
 
 const LoadingPlugin = {
   install(Vue) {
     Vue.mixin({
       data() {
         return {
-          carregando: false
-        }
+          carregando: false,
+        };
       },
       methods: {
         startLoading() {
-          this.carregando = true
+          this.carregando = true;
         },
         stopLoading() {
-          this.carregando = false
-        }
-      }
-    })
+          this.carregando = false;
+        },
+      },
+    });
 
-    Vue.component('Loading', Loading)
+    Vue.component("Loading", Loading);
 
     Vue.prototype.$startLoading = function () {
-      this.startLoading()
-    }
+      this.startLoading();
+    };
 
     Vue.prototype.$stopLoading = function () {
-      this.stopLoading()
-    }
-  }
-}
+      this.stopLoading();
+    };
+  },
+};
 
-export default LoadingPlugin
+export default LoadingPlugin;

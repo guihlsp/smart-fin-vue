@@ -1,19 +1,12 @@
 <template>
-    <b-card>
-       TESTE 
-    </b-card>
+  <i>teste</i>
 </template>
 
 <script>
-
 export default {
-    data() {
-        return {
-
-        }
-    },
-    methods: {
-        
-    }
-}
+  data() {
+    return {};
+  },
+  methods: {},
+};
 </script>

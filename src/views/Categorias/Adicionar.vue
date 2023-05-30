@@ -1,16 +1,15 @@
 <template>
-    <div class="content">
-        <Formulario></Formulario>
-    </div>
+  <div class="content">
+    <Formulario></Formulario>
+  </div>
 </template>
-  
+
 <script>
-import Formulario from '@/components/Categorias/Formulario.vue'
+import Formulario from "@/components/Categorias/Formulario.vue";
 export default {
-    name: 'Adicionar',
-    components: {
-        Formulario
-    }
+  name: "Adicionar",
+  components: {
+    Formulario,
+  },
 };
 </script>
-  

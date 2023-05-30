@@ -17,30 +17,32 @@
     "chartist": "0.11.4",
     "core-js": "3.26.1",
     "google-maps": "4.3.3",
+    "moment": "^2.29.4",
+    "momentjs": "^2.0.0",
     "pinia": "^2.0.28",
     "verte": "^0.0.12",
     "vue": "2.7.14",
     "vue-clickaway": "2.2.2",
     "vue-github-buttons": "3.1.0",
     "vue-material": "^1.0.0-beta-15",
+    "vue-multiselect": "^2.1.7",
     "vue-router": "3.5.2",
     "vue-social-sharing": "3.0.9",
-    "vuelidate": "^0.7.7"
+    "vuelidate": "^0.7.7",
+    "vuetify": "^2.6.15"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "4.5.19",
-    "@vue/cli-plugin-eslint": "4.5.19",
-    "@vue/cli-plugin-router": "4.5.19",
-    "@vue/cli-service": "4.5.19",
-    "@vue/eslint-config-prettier": "7.0.0",
+    "@vue/cli-plugin-babel": "^5.0.8",
+    "@vue/cli-plugin-eslint": "^5.0.8",
+    "@vue/cli-plugin-router": "^5.0.8",
+    "@vue/cli-service": "^5.0.8",
     "babel-eslint": "^10.1.0",
     "es6-promise": "4.2.8",
-    "eslint": "7.32.0",
-    "eslint-plugin-prettier": "4.2.1",
-    "eslint-plugin-vue": "7.20.0",
     "sass": "1.56.2",
     "sass-loader": "10.2.0",
     "vue-cli-plugin-pinia": "~0.2.3",
-    "vue-template-compiler": "2.7.14"
+    "vue-cli-plugin-vuetify": "^2.5.8",
+    "vue-template-compiler": "2.7.14",
+    "vuetify-loader": "^1.7.0"
   }
 }

@@ -1,5 +1,5 @@
 import DashboardLayout from "@/views/Layout/DashboardLayout.vue";
-import PageNotFound from "@/views/PageNotFound.vue"
+import PageNotFound from "@/views/PageNotFound.vue";
 import Cadastro from "@/views/Cadastro.vue";
 import Login from "@/views/Login.vue";
 import Dashboard from "@/views/Dashboard.vue";
@@ -51,17 +51,17 @@ const routes = [
       {
         path: "categorias/adicionar",
         name: "Adicionar categoria",
-        component: () => import('@/views/Categorias/Adicionar.vue'),
+        component: () => import("@/views/Categorias/Adicionar.vue"),
       },
       {
         path: "categorias/editar/:id",
         name: "Editar categoria",
-        component: () => import('@/views/Categorias/Editar'),
+        component: () => import("@/views/Categorias/Editar"),
       },
       {
         path: "categorias/visualizar/:id",
         name: "Visualizar categoria",
-        component: () => import('@/views/Categorias/Visualizar'),
+        component: () => import("@/views/Categorias/Visualizar"),
       },
       {
         path: "contas_bancarias",
@@ -71,17 +71,17 @@ const routes = [
       {
         path: "contas_bancarias/adicionar",
         name: "Adicionar conta bancária",
-        component: () => import('@/views/ContasBancarias/Adicionar.vue'),
+        component: () => import("@/views/ContasBancarias/Adicionar.vue"),
       },
       {
         path: "contas_bancarias/editar/:id",
         name: "Editar conta bancária",
-        component: () => import('@/views/ContasBancarias/Editar'),
+        component: () => import("@/views/ContasBancarias/Editar"),
       },
       {
         path: "contas_bancarias/visualizar/:id",
         name: "Visualizar conta bancária",
-        component: () => import('@/views/ContasBancarias/Visualizar'),
+        component: () => import("@/views/ContasBancarias/Visualizar"),
       },
       {
         path: "tags",
@@ -91,17 +91,17 @@ const routes = [
       {
         path: "tags/adicionar",
         name: "Adicionar tag",
-        component: () => import('@/views/Tags/Adicionar.vue'),
+        component: () => import("@/views/Tags/Adicionar.vue"),
       },
       {
         path: "tags/editar/:id",
         name: "Editar tag",
-        component: () => import('@/views/Tags/Editar'),
+        component: () => import("@/views/Tags/Editar"),
       },
       {
         path: "tags/visualizar/:id",
         name: "Visualizar tag",
-        component: () => import('@/views/Tags/Visualizar'),
+        component: () => import("@/views/Tags/Visualizar"),
       },
       {
         path: "formas_pagamento",
@@ -111,17 +111,17 @@ const routes = [
       {
         path: "formas_pagamento/adicionar",
         name: "Adicionar forma de pagamento",
-        component: () => import('@/views/FormasPagamento/Adicionar.vue'),
+        component: () => import("@/views/FormasPagamento/Adicionar.vue"),
       },
       {
         path: "formas_pagamento/editar/:id",
         name: "Editar forma de pagamento",
-        component: () => import('@/views/FormasPagamento/Editar'),
+        component: () => import("@/views/FormasPagamento/Editar"),
       },
       {
         path: "formas_pagamento/visualizar/:id",
         name: "Visualizar forma de pagamento",
-        component: () => import('@/views/FormasPagamento/Visualizar'),
+        component: () => import("@/views/FormasPagamento/Visualizar"),
       },
       {
         path: "movimentacoes",
@@ -131,17 +131,17 @@ const routes = [
       {
         path: "movimentacoes/adicionar",
         name: "Adicionar movimentação",
-        component: () => import('@/views/Movimentacoes/Adicionar.vue'),
+        component: () => import("@/views/Movimentacoes/Adicionar.vue"),
       },
       {
         path: "movimentacoes/editar/:id",
         name: "Editar movimentação",
-        component: () => import('@/views/Movimentacoes/Editar'),
+        component: () => import("@/views/Movimentacoes/Editar"),
       },
       {
         path: "movimentacoes/visualizar/:id",
         name: "Visualizar movimentação",
-        component: () => import('@/views/Movimentacoes/Visualizar'),
+        component: () => import("@/views/Movimentacoes/Visualizar"),
       },
       {
         path: "icons",

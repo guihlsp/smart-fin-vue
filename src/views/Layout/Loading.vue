@@ -1,9 +1,13 @@
 <template>
-    <div class="loading-spinner">
-        <b-spinner label="Carregando..." type="border" variant="primary"></b-spinner>
-    </div>
+  <div class="loading-spinner">
+    <b-spinner
+      label="Carregando..."
+      type="border"
+      variant="primary"
+    ></b-spinner>
+  </div>
 </template>
-  
+
 <style scoped>
 .loading-spinner {
   position: absolute;
@@ -18,4 +22,3 @@
   z-index: 9999;
 }
 </style>
-  
