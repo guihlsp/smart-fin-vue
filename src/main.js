@@ -13,7 +13,10 @@ import Notifications from "./components/NotificationPlugin";
 import LoadingPlugin from "./plugins/loading.js";
 import moment from 'moment';
 import 'moment/locale/pt-br';
+import { createPinia, PiniaVuePlugin } from "pinia";
+import Chartist from "chartist";
 
+// Bootstrap plugin
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 import BootstrapVue from "bootstrap-vue";
@@ -21,8 +24,7 @@ import BootstrapVue from "bootstrap-vue";
 // MaterialDashboard plugin
 import MaterialDashboard from "./material-dashboard";
 
-import Chartist from "chartist";
-import { createPinia, PiniaVuePlugin } from "pinia";
+// Vuetify plugin
 import vuetify from "./plugins/vuetify";
 
 Vue.use(PiniaVuePlugin);

@@ -4,7 +4,7 @@
             <b-form-group class="col-md-2 col-sm-4">
                 <md-field>
                     <label>Código</label>
-                    <md-input></md-input>
+                    <md-input disabled v-model="formMovimentacaoCopy.codigo"></md-input>
                 </md-field>
             </b-form-group>
             <b-form-group class="col-md-3 col-sm-8">
@@ -16,7 +16,7 @@
                     </md-select>
                 </md-field>
             </b-form-group>
-            <b-form-group class="col-md-4 col-sm-12">
+            <b-form-group class="col-md-4 col-sm-12 mt-2">
                 <v-menu transition="scale-transition" min-width="auto" v-model="formMovimentacaoCopy.vencimento"
                     :close-on-content-click="false" offset-y>
                     <template v-slot:activator="{ on, attrs }">
@@ -41,7 +41,7 @@
             <b-form-group class="col-sm-12 col-md-8">
                 <md-field>
                     <label>Descrição</label>
-                    <md-input></md-input>
+                    <md-input v-model="formMovimentacaoCopy.descricao"></md-input>
                 </md-field>
             </b-form-group>
             <b-form-group class="col-sm-12 col-md-4">

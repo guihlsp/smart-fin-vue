@@ -37,7 +37,7 @@
                                     Valores
                                 </md-card-header>
                                 <md-card-content>
-                                    <Valores />
+                                    <Valores :formMovimentacao="form.movimentacao" />
                                 </md-card-content>
                             </md-card>
                         </div>
@@ -105,6 +105,8 @@ export default {
                     descricao: "",
                     valor: "",
                     juros: "",
+                    desconto: "",
+                    
                 },
             },
             categorias: [],
