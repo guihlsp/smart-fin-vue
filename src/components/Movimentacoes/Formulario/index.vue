@@ -10,7 +10,7 @@
             </md-card-header>
             <md-card-content>
                 <!-- <b-form @submit.prevent="valida" novalidate class="row"> -->
-                <b-form>
+                <b-form @submit.prevent="salvaDados">
                     <md-card>
                         <md-card-header data-background-color="purple">
                             Informações básicas
@@ -42,11 +42,11 @@
                             </md-card>
                         </div>
                         <div class="col-md-6 col-sm-12">
-                            <md-card class="teste">
+                            <md-card class="tag" style="min-height:74%;">
                                 <md-card-header data-background-color="purple">
                                     Tags
                                 </md-card-header>
-                                <md-card-content>
+                                <md-card-content class="mt-5">
                                     <Tags :formMovimentacao="form.movimentacao" :tags="tags" />
                                 </md-card-content>
                             </md-card>
@@ -57,14 +57,21 @@
                             Outras informações
                         </md-card-header>
                         <md-card-content>
-                            <OutrasInformacoes />
+                            <OutrasInformacoes :formMovimentacao="form.movimentacao" />
                         </md-card-content>
                     </md-card>
+                    <div class="d-flex justify-content-end">
+                        <md-card-header data-background-color="green"
+                            class="col-sm-12 col-md-3 mt-2 d-flex justify-content-between">
+                            <span style="font-size: 16px;">Valor total:</span>
+                            <span class="total">R$ {{ form.movimentacao.valor_total }}</span>
+                        </md-card-header>
+                    </div>
                     <div class="mt-3">
                         <md-button type="submit" class="md-primary mb-3">
                             {{ $route.path.includes("editar") ? "Salvar" : "Cadastrar" }}
                         </md-button>
-                        <md-button style="margin-left: 15px" to="/movimentacoes">
+                        <md-button class="ml-4" to="/movimentacoes">
                             Cancelar
                         </md-button>
                     </div>
@@ -76,12 +83,12 @@
 </template>
 
 <script>
-import Valores from "./Valores.vue";
-import Tags from "./Tags.vue";
-import InformacoesBasicas from "./InformacoesBasicas.vue";
-import ContasBancarias from "./ContasBancarias.vue";
-import FormasPagamento from "./FormasPagamento.vue";
-import OutrasInformacoes from "./OutrasInformacoes.vue";
+import Valores from "./Valores";
+import Tags from "./Tags";
+import InformacoesBasicas from "./InformacoesBasicas";
+import ContasBancarias from "./ContasBancarias";
+import FormasPagamento from "./FormasPagamento";
+import OutrasInformacoes from "./OutrasInformacoes";
 
 export default {
     components: {
@@ -96,17 +103,24 @@ export default {
         return {
             form: {
                 movimentacao: {
-                    tipo: "",
-                    codigo: "",
-                    categoria_id: "",
-                    conta_bancaria_id: "",
-                    forma_pagamento_id: "",
-                    tag_id: "",
-                    descricao: "",
-                    valor: "",
-                    juros: "",
-                    desconto: "",
-                    
+                    tipo: '',
+                    codigo: '',
+                    data_vencimento: '',
+                    data_baixa: '',
+                    situacao: '',
+                    categoria_id: '',
+                    conta_bancaria_id: '',
+                    forma_pagamento_id: '',
+                    tag_id: '',
+                    descricao: '',
+                    valor: '',
+                    juros: '',
+                    desconto: '',
+                    taxa: '',
+                    valor_total: '0,00',
+                    observacoes: '',
+
+
                 },
             },
             categorias: [],
@@ -191,7 +205,12 @@ export default {
     left: 0;
 }
 
-.teste {
+.total {
+    font-size: 24px;
+    font-weight: 400;
+}
+
+.tag {
     z-index: 2 !important;
 }
 </style>

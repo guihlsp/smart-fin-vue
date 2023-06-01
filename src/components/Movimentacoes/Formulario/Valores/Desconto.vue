@@ -1,16 +1,16 @@
 <template>
-    <b-form-group class="">
-        <!-- <md-field>
-            <v-textarea label="Observações" variant="outlined"></v-textarea>
-        </md-field> -->
+    <b-form-group label-for="desconto" class="col-md-4 col-sm-12">
         <md-field>
-            <label>Observações</label>
-            <md-textarea v-model="formMovimentacaoCopy.observacoes"></md-textarea>
+            <label>Desconto</label>
+            <md-input id="desconto" v-mascara-moeda v-model="formMovimentacaoCopy.desconto" autocomplete="off"
+                :disabled="carregando">
+            </md-input>
         </md-field>
     </b-form-group>
 </template>
-
+  
 <script>
+
 export default {
     props: ["formMovimentacao"],
     data() {
@@ -23,3 +23,4 @@ export default {
     },
 };
 </script>
+  

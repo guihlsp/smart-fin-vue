@@ -38,7 +38,7 @@ const GlobalDirectives = {
         }, true)
         el.addEventListener('focus', function () {
           el.select()
-          el.setAttribute('placeholder', formataMoeda(0, casas))
+          el.setAttribute('placeholder', 'R$ '+formataMoeda(0, casas))
         }, true)
         el.addEventListener('blur', function (e) {
           el.setAttribute('placeholder', '')

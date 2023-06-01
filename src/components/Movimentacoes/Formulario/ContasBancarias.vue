@@ -2,18 +2,10 @@
   <b-form-group label-for="conta_bancaria_id" class="">
     <md-field>
       <label>Conta bancária</label>
-      <md-select
-        id="conta_bancaria_id"
-        v-model="formMovimentacaoCopy.conta_bancaria_id"
-        autocomplete="off"
-        :disabled="carregando"
-      >
-        <md-option value="" default>Selecione</md-option>
-        <md-option
-          v-for="contaBancaria in contasBancarias"
-          :key="contaBancaria.id"
-          :value="contaBancaria.id"
-        >
+      <md-select id="conta_bancaria_id" v-model="formMovimentacaoCopy.conta_bancaria_id" autocomplete="off"
+        :disabled="carregando">
+        <md-option v-if="contasBancarias && contasBancarias.length == 0" value="" default>Selecione</md-option>
+        <md-option v-for="contaBancaria in contasBancarias" :key="contaBancaria.id" :value="contaBancaria.id">
           {{ contaBancaria.descricao }}
         </md-option>
       </md-select>
