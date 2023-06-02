@@ -1,74 +1,51 @@
 <template>
   <div>
     <div v-if="carregando" class="d-flex justify-content-center mt-5 mb-3">
-      <b-spinner
-        style="width: 100px; height: 100px"
-        variant="success"
-        label="Loading..."
-      ></b-spinner>
+      <b-spinner style="width: 100px; height: 100px" variant="success" label="Loading..."></b-spinner>
     </div>
-    <b-table
-      v-if="!carregando && movimentacoes"
-      striped
-      hover
-      :items="movimentacoes"
-      :fields="campos"
-      responsive
-      ref="table"
-    >
+    <b-table v-if="!carregando && movimentacoes" striped hover :items="movimentacoes" :fields="campos" responsive
+      ref="table">
+      <template v-slot:cell(valor_total)="data">
+        {{ data.item.valor_total | formataMoeda }}
+      </template>
       <template v-slot:head(acoes)="data">
         <th class="d-flex justify-content-end">{{ data.label }}</th>
       </template>
       <template v-slot:cell(acoes)="data">
         <div class="coluna-acoes">
-          <md-button
-            class="acoes md-info md-dense md-just-icon"
-            :to="'movimentacoes/visualizar/' + data.item.id"
-          >
+          <md-button class="acoes md-info md-dense md-just-icon" :to="'movimentacoes/visualizar/' + data.item.id">
             <md-icon> search </md-icon>
           </md-button>
-          <md-button
-            class="acoes md-primary md-dense md-just-icon"
-            :to="'movimentacoes/editar/' + data.item.id"
-          >
+          <md-button class="acoes md-primary md-dense md-just-icon" :to="'movimentacoes/editar/' + data.item.id">
             <md-icon> edit </md-icon>
           </md-button>
-          <md-button
-            class="acoes md-danger md-dense md-just-icon"
-            @click="abrirModal(data.item.id)"
-          >
+          <md-button class="acoes md-danger md-dense md-just-icon" @click="abrirModal(data.item.id)">
             <md-icon> delete </md-icon>
           </md-button>
         </div>
-        <md-dialog-confirm
-          :md-active.sync="modalAberto"
-          md-title="Movimentações"
-          md-content="Tem certeza que deseja excluir a tag ?"
-          md-confirm-text="Confirmar"
-          md-cancel-text="Cancelar"
-          @md-cancel="onCancel"
-          @md-confirm="onConfirm(data.item.id)"
-        />
+        <md-dialog-confirm :md-active.sync="modalAberto" md-title="Movimentações"
+          md-content="Tem certeza que deseja excluir a movimentação ?" md-confirm-text="Confirmar"
+          md-cancel-text="Cancelar" @md-cancel="onCancel" @md-confirm="onConfirm(data.item.id)" />
       </template>
     </b-table>
     <div>
-      <md-empty-state
-        v-if="!carregando && !movimentacoes"
-        md-icon="currency_exchange"
+      <md-empty-state v-if="!carregando && !movimentacoes" md-icon="currency_exchange"
         md-label="Adicione sua primeira movimentação"
-        md-description="Cadastrando as movimentações você poderá ter o controle total e com facilidade do seu fluxo de caixa."
-      >
-        <md-button to="movimentacoes/adicionar" class="md-primary md-raised"
-          >Adicionar movimentação</md-button
-        >
+        md-description="Cadastrando as movimentações você poderá ter o controle total e com facilidade do seu fluxo de caixa.">
+        <md-button to="movimentacoes/adicionar" class="md-primary md-raised">Adicionar movimentação</md-button>
       </md-empty-state>
     </div>
   </div>
 </template>
 
 <script>
+import { formataMoeda } from '../../functions/numero';
+
 export default {
   name: "Lista",
+  filters: {
+    formataMoeda
+  },
   data() {
     return {
       movimentacoes: [],

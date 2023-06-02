@@ -3,7 +3,7 @@
     <md-field>
       <label>Conta bancária</label>
       <md-select id="conta_bancaria_id" v-model="formMovimentacaoCopy.conta_bancaria_id" autocomplete="off"
-        :disabled="carregando">
+        :disabled="carregando" @md-selected="atualizaDados">
         <md-option v-if="contasBancarias && contasBancarias.length == 0" value="" default>Selecione</md-option>
         <md-option v-for="contaBancaria in contasBancarias" :key="contaBancaria.id" :value="contaBancaria.id">
           {{ contaBancaria.descricao }}
@@ -24,5 +24,10 @@ export default {
   mounted() {
     this.formMovimentacaoCopy = { ...this.formMovimentacao };
   },
+  methods: {
+    atualizaDados() {
+      this.$emit("atualizaDados", {conta_bancaria_id: this.formMovimentacaoCopy.conta_bancaria_id});
+    }
+  }
 };
 </script>

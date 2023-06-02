@@ -3,7 +3,7 @@
     <md-field>
       <label>Forma de pagamento</label>
       <md-select id="forma_pagamento_id" v-model="formMovimentacaoCopy.forma_pagamento_id" autocomplete="off"
-        :disabled="carregando">
+        :disabled="carregando" @md-selected="atualizaDados()">
         <md-option v-if="formasPagamento && formasPagamento.length == 0" value="" default>Selecione</md-option>
         <md-option v-for="formaPagamento in formasPagamento" :key="formaPagamento.id" :value="formaPagamento.id">
           {{ formaPagamento.nome }}
@@ -24,5 +24,10 @@ export default {
   mounted() {
     this.formMovimentacaoCopy = { ...this.formMovimentacao };
   },
-};
+  methods: {
+    atualizaDados() {
+      this.$emit('atualizaDados', {forma_pagamento_id: this.formMovimentacaoCopy.forma_pagamento_id});
+    }
+  }
+}
 </script>

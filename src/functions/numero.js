@@ -2,17 +2,25 @@ export const somenteNumeros = (valor) => {
     return valor.replace(/[^\d]+/g, '')
 }
 
-export const formataMoeda = (valor, casas) => {
-    if(casas == undefined){
-        casas = 2;
+export const formataMoeda = (valor, casas = 2) => {
+    if (typeof valor === 'string') {
+        valor = valor.replace(/\./g, '').replace(',', '.');
     }
-    valor = parseFloat(valor)
+    
+    valor = parseFloat(valor);
+    
+    if (isNaN(valor)) {
+        return '';
+    }
+
     return valor.toLocaleString('pt-br', {
         minimumFractionDigits: casas,
         maximumFractionDigits: casas,
         currency: 'BRL'
-    })
-}
+    });
+};
+
+
 
 export const removeMoeda = (valor) => {
     if (valor == '' || valor == undefined) {

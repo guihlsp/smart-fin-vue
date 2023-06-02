@@ -16,7 +16,8 @@
                             Informações básicas
                         </md-card-header>
                         <md-card-content>
-                            <InformacoesBasicas :formMovimentacao="form.movimentacao" :categorias="categorias" />
+                            <InformacoesBasicas :formMovimentacao="form.movimentacao" :categorias="categorias"
+                                @atualizaDados="atualizaFormulario" />
                         </md-card-content>
                     </md-card>
                     <md-card>
@@ -25,9 +26,9 @@
                         </md-card-header>
                         <md-card-content class="row">
                             <FormasPagamento class="col-md-6 col-sm-12" :formMovimentacao="form.movimentacao"
-                                :formasPagamento="formasPagamento" />
+                                :formasPagamento="formasPagamento" @atualizaDados="atualizaFormulario" />
                             <ContasBancarias class="col-md-6 col-sm-12" :formMovimentacao="form.movimentacao"
-                                :contasBancarias="contasBancarias" />
+                                :contasBancarias="contasBancarias" @atualizaDados="atualizaFormulario" />
                         </md-card-content>
                     </md-card>
                     <div class="row">
@@ -37,7 +38,12 @@
                                     Valores
                                 </md-card-header>
                                 <md-card-content>
-                                    <Valores :formMovimentacao="form.movimentacao" />
+                                    <div class="row">
+                                        <Valor :formMovimentacao="form.movimentacao" @atualizaDados="atualizaFormulario" />
+                                        <Desconto :formMovimentacao="form.movimentacao"
+                                            @atualizaDados="atualizaFormulario" />
+                                        <Juros :formMovimentacao="form.movimentacao" @atualizaDados="atualizaFormulario" />
+                                    </div>
                                 </md-card-content>
                             </md-card>
                         </div>
@@ -47,7 +53,8 @@
                                     Tags
                                 </md-card-header>
                                 <md-card-content class="mt-5">
-                                    <Tags :formMovimentacao="form.movimentacao" :tags="tags" />
+                                    <Tags :formMovimentacao="form.movimentacao" :tags="tags"
+                                        @atualizaDados="atualizaFormulario" />
                                 </md-card-content>
                             </md-card>
                         </div>
@@ -57,11 +64,11 @@
                             Outras informações
                         </md-card-header>
                         <md-card-content>
-                            <OutrasInformacoes :formMovimentacao="form.movimentacao" />
+                            <OutrasInformacoes :formMovimentacao="form.movimentacao" @atualizaDados="atualizaFormulario" />
                         </md-card-content>
                     </md-card>
                     <div class="d-flex justify-content-end">
-                        <md-card-header data-background-color="green"
+                        <md-card-header :data-background-color='form.movimentacao.tipo == "RE" ? "green" : "red"'
                             class="col-sm-12 col-md-3 mt-2 d-flex justify-content-between">
                             <span style="font-size: 16px;">Valor total:</span>
                             <span class="total">R$ {{ form.movimentacao.valor_total }}</span>
@@ -83,12 +90,15 @@
 </template>
 
 <script>
-import Valores from "./Valores";
+import Valor from './Valor';
+import Desconto from './Desconto';
+import Juros from './Juros';
 import Tags from "./Tags";
 import InformacoesBasicas from "./InformacoesBasicas";
 import ContasBancarias from "./ContasBancarias";
 import FormasPagamento from "./FormasPagamento";
 import OutrasInformacoes from "./OutrasInformacoes";
+import { formataMoeda } from '../../../functions/numero';
 
 export default {
     components: {
@@ -96,31 +106,35 @@ export default {
         ContasBancarias,
         InformacoesBasicas,
         OutrasInformacoes,
-        Valores,
         Tags,
+        Valor,
+        Desconto,
+        Juros
     },
     data() {
         return {
             form: {
                 movimentacao: {
-                    tipo: '',
-                    codigo: '',
+                    codigo: 1,
+                    tipo: '1',
                     data_vencimento: '',
+                    situacao: '1',
                     data_baixa: '',
-                    situacao: '',
                     categoria_id: '',
-                    conta_bancaria_id: '',
-                    forma_pagamento_id: '',
-                    tag_id: '',
                     descricao: '',
-                    valor: '',
-                    juros: '',
-                    desconto: '',
-                    taxa: '',
-                    valor_total: '0,00',
+                    forma_pagamento_id: '',
+                    conta_bancaria_id: '',
+                    valor: null,
+                    juros: null,
+                    desconto: null,
+                    taxa: null,
+                    tag_id: '',
                     observacoes: '',
-
-
+                    valor_total: null,
+                    possui_parcela: 0,
+                    baixado: 0,
+                    visibilidade: 1,
+                    
                 },
             },
             categorias: [],
@@ -189,6 +203,17 @@ export default {
             }
             this.$router.push("/movimentacoes");
             this.carregando = false;
+        },
+        atualizaFormulario(data) {
+            for (let campo in data) {
+                this.form.movimentacao[campo] = data[campo];
+            }
+            const { valor, desconto, juros, taxa, situacao } = this.form.movimentacao;
+            this.form.movimentacao.valor_total = formataMoeda(
+                valor - desconto + juros + taxa
+            );
+            this.form.movimentacao.baixado = situacao == 1 ? 0 : 1;
+            console.log(this.form.movimentacao)
         },
     },
     created() {

@@ -1,11 +1,8 @@
 <template>
-    <b-form-group class="">
-        <!-- <md-field>
-            <v-textarea label="Observações" variant="outlined"></v-textarea>
-        </md-field> -->
+    <b-form-group>
         <md-field>
             <label>Observações</label>
-            <md-textarea v-model="formMovimentacaoCopy.observacoes"></md-textarea>
+            <md-textarea v-model="formMovimentacaoCopy.observacoes" @input="atualizaDados()"></md-textarea>
         </md-field>
     </b-form-group>
 </template>
@@ -21,5 +18,10 @@ export default {
     mounted() {
         this.formMovimentacaoCopy = { ...this.formMovimentacao };
     },
+    methods: {
+        atualizaDados() {
+            this.$emit("atualizaDados", { observacoes: this.formMovimentacaoCopy.observacoes });
+        }
+    }
 };
 </script>

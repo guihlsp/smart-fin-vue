@@ -4,57 +4,55 @@
             <b-form-group class="col-md-2 col-sm-4">
                 <md-field>
                     <label>Código</label>
-                    <md-input disabled v-model="formMovimentacaoCopy.codigo"></md-input>
+                    <md-input disabled @input="atualizaDados()" v-model="formMovimentacaoCopy.codigo"></md-input>
                 </md-field>
             </b-form-group>
             <b-form-group class="col-md-3 col-sm-8">
                 <md-field>
                     <label>Tipo</label>
-                    <md-select id="tipo" v-model="formMovimentacaoCopy.tipo" autocomplete="off" :disabled="carregando">
-                        <md-option value="1" default>Pagamento</md-option>
+                    <md-select id="tipo" v-model="formMovimentacaoCopy.tipo" autocomplete="off" :disabled="carregando"
+                        @md-selected="atualizaDados()">
+                        <md-option value="1">Pagamento</md-option>
                         <md-option value="2">Recebimento</md-option>
                     </md-select>
                 </md-field>
             </b-form-group>
             <b-form-group class="col-md-4 col-sm-12 mt-2">
-                <v-menu transition="scale-transition" min-width="auto" v-model="formMovimentacaoCopy.data_vencimento"
-                    :close-on-content-click="false" offset-y>
+                <v-menu transition="scale-transition" min-width="auto" :close-on-content-click="true" offset-y>
                     <template v-slot:activator="{ on, attrs }">
-                        <v-text-field v-model="dataVencimentoFormatada" label="Data" variant="underlined"
+                        <v-text-field v-model="formMovimentacaoCopy.data_vencimento" label="Data" variant="underlined"
                             append-icon="mdi-calendar" readonly v-bind="attrs" v-on="on"></v-text-field>
                     </template>
                     <v-date-picker no-title scrollable color="green lighten-1" v-model="dataVencimentoSelecionada"
-                        elevation="15" @input="formMovimentacaoCopy.data_vencimento = false" locale="pt-br"
-                        :first-day-of-week="0"></v-date-picker>
+                        elevation="15" locale="pt-br" :first-day-of-week="0"></v-date-picker>
                 </v-menu>
             </b-form-group>
             <b-form-group class="col-md-3 col-sm-12">
                 <md-field>
                     <label>Situação</label>
                     <md-select id="situacao" v-model="formMovimentacaoCopy.situacao" autocomplete="off"
-                        :disabled="carregando">
+                        :disabled="carregando" @md-selected="atualizaDados()">
                         <md-option value="1" default>Pendente</md-option>
                         <md-option value="2">Confirmado</md-option>
                     </md-select>
                 </md-field>
             </b-form-group>
             <b-form-group class="col-md-6 col-sm-12 mt-2" v-if="situacaoConfirmada">
-                <v-menu transition="scale-transition" min-width="auto" v-model="formMovimentacaoCopy.data_baixa"
-                    :close-on-content-click="false" offset-y>
+                <v-menu transition="scale-transition" min-width="auto" :close-on-content-click="true" offset-y>
                     <template v-slot:activator="{ on, attrs }">
-                        <v-text-field v-model="dataBaixaFormatada" label="Data de confirmação" variant="underlined"
-                            append-icon="mdi-calendar" readonly v-bind="attrs" v-on="on"></v-text-field>
+                        <v-text-field v-model="formMovimentacaoCopy.data_baixa" label="Data de confirmação"
+                            variant="underlined" append-icon="mdi-calendar" readonly v-bind="attrs"
+                            v-on="on"></v-text-field>
                     </template>
                     <v-date-picker no-title scrollable color="green lighten-1" v-model="dataBaixaSelecionada" elevation="15"
-                        @input="formMovimentacaoCopy.data_baixa = false" locale="pt-br"
-                        :first-day-of-week="0"></v-date-picker>
+                        locale="pt-br" :first-day-of-week="0"></v-date-picker>
                 </v-menu>
             </b-form-group>
             <b-form-group class="col-sm-12 col-md-6">
                 <md-field>
                     <label>Categoria</label>
                     <md-select id="categoria_id" v-model="formMovimentacaoCopy.categoria_id" autocomplete="off"
-                        :disabled="carregando">
+                        :disabled="carregando" @md-selected="atualizaDados()">
                         <md-option v-if="categorias && categorias.length == 0" value="" default>Selecione</md-option>
                         <md-option v-for="categoria in categorias" :key="categoria.id" :value="categoria.id">
                             {{ categoria.descricao }}
@@ -65,7 +63,7 @@
             <b-form-group class="col-sm-12 col-md-6">
                 <md-field>
                     <label>Descrição</label>
-                    <md-input v-model="formMovimentacaoCopy.descricao"></md-input>
+                    <md-input v-model="formMovimentacaoCopy.descricao" @input="atualizaDados()"></md-input>
                 </md-field>
             </b-form-group>
         </div>
@@ -78,18 +76,18 @@ export default {
     data() {
         return {
             formMovimentacaoCopy: {},
-            dataVencimentoSelecionada: null,
-            dataVencimentoFormatada: '',
-            dataBaixaSelecionada: null,
-            dataBaixaFormatada: '',
+            dataVencimentoSelecionada: '',
+            dataBaixaSelecionada: '',
         };
     },
     watch: {
         dataVencimentoSelecionada(valor) {
-            this.dataVencimentoFormatada = this.formataData(valor);
+            this.formMovimentacaoCopy.data_vencimento = this.formataData(valor);
+            this.atualizaDados();
         },
         dataBaixaSelecionada(valor) {
-            this.dataBaixaFormatada = this.formataData(valor);
+            this.formMovimentacaoCopy.data_baixa = this.formataData(valor);
+            this.atualizaDados();
         },
     },
     mounted() {
@@ -97,10 +95,10 @@ export default {
     },
     computed: {
         labelDataVencimento() {
-            return this.dataVencimentoFormatada ? '' : 'Selecione uma data';
+            return this.formMovimentacaoCopy.data_vencimento ? '' : 'Selecione uma data';
         },
         labelDataBaixa() {
-            return this.dataBaixaFormatada ? '' : 'Selecione uma data';
+            return this.formMovimentacaoCopy.data_baixa ? '' : 'Selecione uma data';
         },
         situacaoConfirmada() {
             return this.formMovimentacaoCopy.situacao == '2';
@@ -112,11 +110,17 @@ export default {
             this.$moment.locale('pt-br');
             return this.$moment(data).format('DD/MM/YYYY');
         },
-        exibeDataBaixa() {
-            if (!this.situacaoConfirmada) {
-                this.formMovimentacaoCopy.data_baixa = '';
-            }
-        },
+        atualizaDados() {
+            this.$emit('atualizaDados', {
+                codigo: this.formMovimentacaoCopy.codigo,
+                tipo: this.formMovimentacaoCopy.tipo,
+                data_vencimento: this.formMovimentacaoCopy.data_vencimento,
+                situacao: this.formMovimentacaoCopy.situacao,
+                data_baixa: this.formMovimentacaoCopy.data_baixa,
+                categoria_id: this.formMovimentacaoCopy.categoria_id,
+                descricao: this.formMovimentacaoCopy.descricao,
+            });
+        }
     },
 }
 </script>
