@@ -2,7 +2,7 @@
     <b-form-group label-for="juros" class="col-md-4 col-sm-12">
         <md-field>
             <label>Juros</label>
-            <md-input id="juros" v-mascara-moeda v-model="formMovimentacaoCopy.juros" autocomplete="off"
+            <md-input id="juros" v-mascara-moeda v-model="formMovimentacao.juros" autocomplete="off"
                 :disabled="carregando" @input="atualizaDados()">
             </md-input>
         </md-field>
@@ -13,19 +13,9 @@
 
 export default {
     props: ["formMovimentacao"],
-    data() {
-        return {
-            formMovimentacaoCopy: {
-                juros: null,
-            },
-        };
-    },
-    mounted() {
-        this.formMovimentacaoCopy = { ...this.formMovimentacao };
-    },
     methods: {
         atualizaDados() {
-            this.$emit('atualizaDados', { juros:  parseFloat(this.formMovimentacaoCopy.juros) });
+            this.$emit('atualizaDados', { juros:  parseFloat(this.formMovimentacao.juros) });
         }
     }
 };

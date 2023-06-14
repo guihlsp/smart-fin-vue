@@ -66,10 +66,6 @@
               </md-input>
               <md-icon><a>lock</a></md-icon>
             </md-field>
-            <span class="md-error" v-if="!$v.form.password.required"
-              >Senha obrigatória</span
-            >
-            <br />
             <i>
               Ao se cadastrar, você concorda com os
               <a style="cursor: pointer" @click="showDialog = true"

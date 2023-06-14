@@ -1,6 +1,6 @@
 <template>
-  <multiselect v-model="formMovimentacaoCopy.tag_id" :close-on-select="false" :clear-on-select="false" label="descricao"
-    track-by="id" :options="tags" :multiple="true" :taggable="true" :tag-position="'bottom'"
+  <multiselect @input="atualizaDados" v-model="formMovimentacao.tags" :close-on-select="false" :clear-on-select="false"
+    label="descricao" track-by="id" :options="tags" :multiple="true" :taggable="true" :tag-position="'bottom'"
     :select-label="'Pressione enter para selecionar'" :selectedLabel="'Selecionado'"
     :deselectLabel="'Pressione enter para remover'" :disable="true" :searchable="false" placeholder="Selecione">
     <template slot="option" slot-scope="{ option }">
@@ -18,13 +18,10 @@
 <script>
 export default {
   props: ["tags", "formMovimentacao"],
-  data() {
-    return {
-      formMovimentacaoCopy: {},
-    };
-  },
-  mounted() {
-    this.formMovimentacaoCopy = { ...this.formMovimentacao };
+  methods: {
+    atualizaDados() {
+      this.$emit("atualizaDados", { tags: this.formMovimentacao.tags });
+    },
   },
 };
 </script>

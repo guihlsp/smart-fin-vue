@@ -6,7 +6,9 @@
     <b-table v-if="!carregando && movimentacoes" striped hover :items="movimentacoes" :fields="campos" responsive
       ref="table">
       <template v-slot:cell(valor_total)="data">
-        {{ data.item.valor_total | formataMoeda }}
+        <span>
+          {{ data.item.valor_total }}
+        </span>
       </template>
       <template v-slot:head(acoes)="data">
         <th class="d-flex justify-content-end">{{ data.label }}</th>
@@ -39,13 +41,8 @@
 </template>
 
 <script>
-import { formataMoeda } from '../../functions/numero';
-
 export default {
   name: "Lista",
-  filters: {
-    formataMoeda
-  },
   data() {
     return {
       movimentacoes: [],

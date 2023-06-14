@@ -21,6 +21,8 @@ import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 import BootstrapVue from "bootstrap-vue";
 
+import { removeMoeda, formataMoeda } from './functions/numero';
+
 // MaterialDashboard plugin
 import MaterialDashboard from "./material-dashboard";
 
@@ -39,7 +41,8 @@ const router = new VueRouter({
 
 Vue.prototype.$moment = moment;
 Vue.prototype.$Chartist = Chartist;
-
+Vue.filter('formataMoeda', formataMoeda)
+Vue.filter('removeMoeda', removeMoeda)
 Vue.use(LoadingPlugin);
 Vue.use(BootstrapVue);
 Vue.use(AxiosPlugin);

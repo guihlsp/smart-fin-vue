@@ -68,10 +68,10 @@
                         </md-card-content>
                     </md-card>
                     <div class="d-flex justify-content-end">
-                        <md-card-header :data-background-color='form.movimentacao.tipo == "RE" ? "green" : "red"'
+                        <md-card-header :data-background-color='form.movimentacao.tipo == "2" ? "green" : "red"'
                             class="col-sm-12 col-md-3 mt-2 d-flex justify-content-between">
                             <span style="font-size: 16px;">Valor total:</span>
-                            <span class="total">R$ {{ form.movimentacao.valor_total }}</span>
+                            <span class="total">R$ {{ form.movimentacao.valor_total | formataMoeda }}</span>
                         </md-card-header>
                     </div>
                     <div class="mt-3">
@@ -115,7 +115,7 @@ export default {
         return {
             form: {
                 movimentacao: {
-                    codigo: 1,
+                    codigo: '',
                     tipo: '1',
                     data_vencimento: '',
                     situacao: '1',
@@ -128,13 +128,12 @@ export default {
                     juros: null,
                     desconto: null,
                     taxa: null,
-                    tag_id: '',
+                    tags: [],
                     observacoes: '',
-                    valor_total: null,
+                    valor_total: 0,
                     possui_parcela: 0,
                     baixado: 0,
                     visibilidade: 1,
-                    
                 },
             },
             categorias: [],
@@ -155,8 +154,8 @@ export default {
             await this.$api
                 .get(`/movimentacoes/${action}`)
                 .then((response) => {
-                    this.form.movimentacao =
-                        response.data.Movimentacao ?? this.form.movimentacao;
+                    this.form.movimentacao = response.data.Movimentacao ?? this.form.movimentacao;
+                    this.form.movimentacao.codigo = (action == 'adicionar' ? response.data.Codigo : this.form.movimentacao.codigo)
                     this.contasBancarias = response.data.ContasBancarias ?? [];
                     this.formasPagamento = response.data.FormasPagamento ?? [];
                     this.categorias = response.data.Categorias ?? [];
@@ -209,7 +208,7 @@ export default {
                 this.form.movimentacao[campo] = data[campo];
             }
             const { valor, desconto, juros, taxa, situacao } = this.form.movimentacao;
-            this.form.movimentacao.valor_total = formataMoeda(
+            this.form.movimentacao.valor_total = (
                 valor - desconto + juros + taxa
             );
             this.form.movimentacao.baixado = situacao == 1 ? 0 : 1;

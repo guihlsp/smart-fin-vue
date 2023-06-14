@@ -32,11 +32,17 @@
         <md-icon>sync_alt </md-icon>
         <p>Transferências</p>
       </sidebar-link>
-      <sidebar-link to="/logout" class="">
-        <md-icon>logout</md-icon>
-        <p>Sair</p>
-      </sidebar-link>
+      <li class="md-list-item"> 
+        <a class="md-list-item-container md-button-clean" @click="confirmacaoLogout()">
+          <div class="md-list-item-content md-ripple">
+            <md-icon>logout</md-icon>
+            <p>Sair</p>
+          </div>
+        </a>
+      </li>
     </side-bar>
+    <md-dialog-confirm :md-active.sync="modalLogout" md-title="Sair" md-content="Tem certeza que deseja sair?"
+      md-confirm-text="Confirmar" md-cancel-text="Cancelar" @md-cancel="onCancel" @md-confirm="onConfirm()" />
 
     <div class="main-panel">
       <top-navbar></top-navbar>
@@ -69,7 +75,26 @@ export default {
     return {
       sidebarBackground: "green",
       sidebarBackgroundImage: require("@/assets/img/sidebar-2.jpg"),
+      modalLogout: false,
     };
   },
+  methods: {
+    confirmacaoLogout() {
+      this.modalLogout = true ;
+    },
+    onConfirm() {
+      this.$api.post('/logout')
+      .then (()=> {
+        localStorage.removeItem("token")
+        this.$router.push('/login')
+      })
+      .catch((error) => {
+      console.error(error);
+    });
+    },
+    onCancel() {
+      this.modalLogout = false;
+    },
+  }
 };
 </script>

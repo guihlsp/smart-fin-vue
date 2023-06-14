@@ -4,13 +4,13 @@
             <b-form-group class="col-md-2 col-sm-4">
                 <md-field>
                     <label>Código</label>
-                    <md-input disabled @input="atualizaDados()" v-model="formMovimentacaoCopy.codigo"></md-input>
+                    <md-input disabled v-model="formMovimentacao.codigo"></md-input>
                 </md-field>
             </b-form-group>
             <b-form-group class="col-md-3 col-sm-8">
                 <md-field>
                     <label>Tipo</label>
-                    <md-select id="tipo" v-model="formMovimentacaoCopy.tipo" autocomplete="off" :disabled="carregando"
+                    <md-select id="tipo" v-model="formMovimentacao.tipo" autocomplete="off" :disabled="carregando"
                         @md-selected="atualizaDados()">
                         <md-option value="1">Pagamento</md-option>
                         <md-option value="2">Recebimento</md-option>
@@ -20,7 +20,7 @@
             <b-form-group class="col-md-4 col-sm-12 mt-2">
                 <v-menu transition="scale-transition" min-width="auto" :close-on-content-click="true" offset-y>
                     <template v-slot:activator="{ on, attrs }">
-                        <v-text-field v-model="formMovimentacaoCopy.data_vencimento" label="Data" variant="underlined"
+                        <v-text-field v-model="formMovimentacao.data_vencimento" label="Data" variant="underlined"
                             append-icon="mdi-calendar" readonly v-bind="attrs" v-on="on"></v-text-field>
                     </template>
                     <v-date-picker no-title scrollable color="green lighten-1" v-model="dataVencimentoSelecionada"
@@ -30,7 +30,7 @@
             <b-form-group class="col-md-3 col-sm-12">
                 <md-field>
                     <label>Situação</label>
-                    <md-select id="situacao" v-model="formMovimentacaoCopy.situacao" autocomplete="off"
+                    <md-select id="situacao" v-model="formMovimentacao.situacao" autocomplete="off"
                         :disabled="carregando" @md-selected="atualizaDados()">
                         <md-option value="1" default>Pendente</md-option>
                         <md-option value="2">Confirmado</md-option>
@@ -40,7 +40,7 @@
             <b-form-group class="col-md-6 col-sm-12 mt-2" v-if="situacaoConfirmada">
                 <v-menu transition="scale-transition" min-width="auto" :close-on-content-click="true" offset-y>
                     <template v-slot:activator="{ on, attrs }">
-                        <v-text-field v-model="formMovimentacaoCopy.data_baixa" label="Data de confirmação"
+                        <v-text-field v-model="formMovimentacao.data_baixa" label="Data de confirmação"
                             variant="underlined" append-icon="mdi-calendar" readonly v-bind="attrs"
                             v-on="on"></v-text-field>
                     </template>
@@ -51,7 +51,7 @@
             <b-form-group class="col-sm-12 col-md-6">
                 <md-field>
                     <label>Categoria</label>
-                    <md-select id="categoria_id" v-model="formMovimentacaoCopy.categoria_id" autocomplete="off"
+                    <md-select id="categoria_id" v-model="formMovimentacao.categoria_id" autocomplete="off"
                         :disabled="carregando" @md-selected="atualizaDados()">
                         <md-option v-if="categorias && categorias.length == 0" value="" default>Selecione</md-option>
                         <md-option v-for="categoria in categorias" :key="categoria.id" :value="categoria.id">
@@ -63,7 +63,7 @@
             <b-form-group class="col-sm-12 col-md-6">
                 <md-field>
                     <label>Descrição</label>
-                    <md-input v-model="formMovimentacaoCopy.descricao" @input="atualizaDados()"></md-input>
+                    <md-input v-model="formMovimentacao.descricao" @input="atualizaDados()"></md-input>
                 </md-field>
             </b-form-group>
         </div>
@@ -75,33 +75,29 @@ export default {
     props: ["categorias", "formMovimentacao"],
     data() {
         return {
-            formMovimentacaoCopy: {},
             dataVencimentoSelecionada: '',
             dataBaixaSelecionada: '',
         };
     },
     watch: {
         dataVencimentoSelecionada(valor) {
-            this.formMovimentacaoCopy.data_vencimento = this.formataData(valor);
+            this.formMovimentacao.data_vencimento = this.formataData(valor);
             this.atualizaDados();
         },
         dataBaixaSelecionada(valor) {
-            this.formMovimentacaoCopy.data_baixa = this.formataData(valor);
+            this.formMovimentacao.data_baixa = this.formataData(valor);
             this.atualizaDados();
         },
     },
-    mounted() {
-        this.formMovimentacaoCopy = { ...this.formMovimentacao };
-    },
     computed: {
         labelDataVencimento() {
-            return this.formMovimentacaoCopy.data_vencimento ? '' : 'Selecione uma data';
+            return this.formMovimentacao.data_vencimento ? '' : 'Selecione uma data';
         },
         labelDataBaixa() {
-            return this.formMovimentacaoCopy.data_baixa ? '' : 'Selecione uma data';
+            return this.formMovimentacao.data_baixa ? '' : 'Selecione uma data';
         },
         situacaoConfirmada() {
-            return this.formMovimentacaoCopy.situacao == '2';
+            return this.formMovimentacao.situacao == '2';
         },
     },
     methods: {
@@ -112,13 +108,12 @@ export default {
         },
         atualizaDados() {
             this.$emit('atualizaDados', {
-                codigo: this.formMovimentacaoCopy.codigo,
-                tipo: this.formMovimentacaoCopy.tipo,
-                data_vencimento: this.formMovimentacaoCopy.data_vencimento,
-                situacao: this.formMovimentacaoCopy.situacao,
-                data_baixa: this.formMovimentacaoCopy.data_baixa,
-                categoria_id: this.formMovimentacaoCopy.categoria_id,
-                descricao: this.formMovimentacaoCopy.descricao,
+                tipo: this.formMovimentacao.tipo,
+                data_vencimento: this.formMovimentacao.data_vencimento,
+                situacao: this.formMovimentacao.situacao,
+                data_baixa: this.formMovimentacao.data_baixa,
+                categoria_id: this.formMovimentacao.categoria_id,
+                descricao: this.formMovimentacao.descricao,
             });
         }
     },
